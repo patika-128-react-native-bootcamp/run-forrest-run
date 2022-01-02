@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import routes from '../../navigation/routes';
 import auth from '@react-native-firebase/auth';
 import Button from '../../components/Button';
@@ -17,15 +17,20 @@ export default function Dashboard({navigation}) {
       });
   }
 
-  console.log(auth().currentUser)
+  function navigateToNewActivity() {
+    navigation.navigate(routes.NEW_ACTIVITY_PAGE);
+  }
 
   return (
     <View style={{alignItems: 'center', justifyContent: 'space-between'}}>
-      <TotalInfoCard />
-      <Button
-        label={'Sign Out'}
-        theme="roundPrimary"
-        onPress={handleSignOut}></Button>
+        <TotalInfoCard />
+        <Button
+          label={'Sign Out'}
+          onPress={handleSignOut}></Button>
+        <Button
+          label={'START'}
+          theme="roundPrimary"
+          onPress={navigateToNewActivity}></Button>
     </View>
   );
 }

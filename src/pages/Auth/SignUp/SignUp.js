@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Alert} from 'react-native';
+import {View, Text, Alert, ScrollView} from 'react-native';
 import routes from '../../../navigation/routes';
 import {Formik} from 'formik';
 import Input from '../../../components/Input';
@@ -8,8 +8,7 @@ import styles from './SignUp.style';
 import auth from '@react-native-firebase/auth';
 
 export default function SignUp({navigation}) {
-  
-    function handleSignUp(signData) {
+  function handleSignUp(signData) {
     if (signData.password !== signData.rePassword) {
       Alert.alert('Passwords do not match');
       return;
@@ -17,6 +16,9 @@ export default function SignUp({navigation}) {
     auth()
       .createUserWithEmailAndPassword(signData.email, signData.password)
       .then(() => {
+        auth().currentUser.updateProfile({
+          displayName: signData.name + ' ' + signData.surname,
+        });
         Alert.alert('User account created & logged in!');
         handleReturnLogin();
       })
@@ -43,12 +45,29 @@ export default function SignUp({navigation}) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.logo}>👟</Text>
       <Formik
-        initialValues={{email: '', password: '', rePassword: ''}}
+        initialValues={{
+          name: '',
+          surname: '',
+          email: '',
+          password: '',
+          rePassword: '',
+        }}
         onSubmit={formValues => handleSignUp(formValues)}>
         {({handleSubmit, handleChange, values}) => (
           <View>
+            <Input
+              label="Name"
+              placeholder="Name..."
+              value={values.name}
+              onChangeText={handleChange('name')}
+            />
+            <Input
+              label="Surname"
+              placeholder="Surname..."
+              value={values.surname}
+              onChangeText={handleChange('surname')}
+            />
             <Input
               label="Email"
               placeholder="Email..."
