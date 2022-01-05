@@ -4,6 +4,7 @@ import {Formik} from 'formik';
 import Input from '../../../components/Input';
 import routes from '../../../navigation/routes';
 import styles from './Login.style';
+import Toast from 'react-native-toast-message';
 import Button from '../../../components/Button';
 import auth from '@react-native-firebase/auth';
 
@@ -16,10 +17,18 @@ export default function Login({navigation}) {
     auth()
       .signInWithEmailAndPassword(loginData.email, loginData.password)
       .then(() => {
-        console.log('Login Successful');
+        Toast.show({
+          type: 'success',
+          text1: 'Login Failed!',
+          text2: 'An error occurred while login.',
+        });
       })
       .catch(error => {
-        console.error(error);
+        Toast.show({
+          type: 'error',
+          text1: 'Login Successful!',
+        });
+        console.log(error);
       });
   }
 

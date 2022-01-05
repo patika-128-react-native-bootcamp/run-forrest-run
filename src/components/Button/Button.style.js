@@ -25,7 +25,7 @@ export default {
       backgroundColor: colors.themeColor,
     },
     label: {
-      fontWeight: 'bold',
+      ...base_style.label,
       color: 'white',
     },
   }),
@@ -38,7 +38,7 @@ export default {
       borderColor: colors.themeColor,
     },
     label: {
-      fontWeight: 'bold',
+      ...base_style.label,
       color: colors.themeColor,
     },
   }),
@@ -53,7 +53,7 @@ export default {
       borderRadius: 75,
     },
     label: {
-      fontWeight: 'bold',
+      ...base_style.label,
       color: 'white',
       fontSize: fontSizes.huge,
     },
@@ -70,7 +70,7 @@ export default {
       borderRadius: 75,
     },
     label: {
-      fontWeight: 'bold',
+      ...base_style.label,
       color: colors.themeColor,
       fontSize: fontSizes.huge,
     },

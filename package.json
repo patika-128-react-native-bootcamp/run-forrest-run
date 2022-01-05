@@ -22,6 +22,7 @@
     "axios": "^0.24.0",
     "expo-dark-mode-switch": "^0.0.2",
     "formik": "^2.2.9",
+    "haversine": "^1.1.1",
     "i18n-js": "^3.8.0",
     "i18next": "^21.6.4",
     "lottie-ios": "^3.2.3",
@@ -29,6 +30,7 @@
     "react": "17.0.2",
     "react-i18next": "^11.15.2",
     "react-native": "0.66.4",
+    "react-native-config": "^1.4.5",
     "react-native-dropdown-picker": "^5.2.3",
     "react-native-localize": "^2.1.7",
     "react-native-maps": "0.29.4",
@@ -38,6 +40,7 @@
     "react-native-screens": "^3.10.1",
     "react-native-shadow-2": "^6.0.0-beta.0",
     "react-native-svg": "^12.1.1",
+    "react-native-toast-message": "^2.1.1",
     "react-native-vector-icons": "^9.0.0"
   },
   "devDependencies": {

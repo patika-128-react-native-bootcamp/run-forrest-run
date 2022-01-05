@@ -1,76 +1,123 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Alert} from 'react-native';
-import MapView, {Marker} from 'react-native-maps';
+import {View, Text} from 'react-native';
+import MapView, {Marker, Polyline} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
-import useWeather from '../../hooks/useWeather';
-import axios from 'axios';
+import Toast from 'react-native-toast-message';
+import Loading from '../../components/Loading';
+import styles from './NewActivity.style';
+import routes from '../../navigation/routes';
+import {fetchWeather} from '../../services/weatherService';
 
-export default function NewActivity() {
-  const [startingCoord, setStartingCoord] = useState({
-    latitude: 0,
-    longitude: 0,
-  });
-  const [currentCoord, setCurrentCoord] = useState({
-    latitude: 0,
-    longitude: 0,
-  });
+export default function NewActivity({navigation}) {
+  const [startingCoord, setStartingCoord] = useState();
+  const [currentCoord, setCurrentCoord] = useState();
+  const [routeCoords, setRouteCoords] = useState([]);
   const [weatherInfo, setWeatherInfo] = useState([]);
 
   async function handleFetchWeather(latitude, longitude) {
     try {
-      const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=13ea7bc900806057f5cb50345c0c69a7`,
-      );
+      const response = await fetchWeather(latitude, longitude);
       setWeatherInfo(response.data);
     } catch (error) {
-      Alert.alert('An error occurred while fetching weather information.');
+      Toast.show({
+        type: 'error',
+        text1: 'Weather information could not fetched',
+      });
+      console.log(error);
+      navigateToDashboard();
     }
   }
 
-  Geolocation.watchPosition(
-    position => {
-      console.log(position);
-      setCurrentCoord(position.coords);
-    },
-    error => {
-      console.log(error);
-    },
-  );
+  function navigateToDashboard() {
+    navigation.navigate(routes.DASHBOARD_PAGE);
+  }
 
   useEffect(() => {
-    Geolocation.getCurrentPosition(info => {
-      setStartingCoord(info.coords);
-      handleFetchWeather(info.coords.latitude, info.coords.longitude);
-    });
+    if (!!currentCoord) {
+      setRouteCoords([
+        ...routeCoords,
+        {
+          latitude: currentCoord.latitude,
+          longitude: currentCoord.longitude,
+        },
+      ]);
+    }
+  }, [currentCoord]);
+
+  function handleCurrentCoord() {
+    Geolocation.watchPosition(
+      position => {
+        setCurrentCoord(position.coords);
+      },
+      error => {
+        Toast.show({
+          type: 'error',
+          text1: 'Error Getting Location!',
+          text2: 'Ensure your gps on',
+        });
+        console.log(error);
+        navigateToDashboard();
+      },
+      {
+        maximumAge: 0,
+        distanceFilter: 15,
+        timeout: 10000,
+      },
+    );
+  }
+
+  useEffect(() => {
+    Geolocation.getCurrentPosition(
+      info => {
+        setStartingCoord(info.coords);
+        setCurrentCoord(info.coords);
+        handleFetchWeather(info.coords.latitude, info.coords.longitude);
+      },
+      error => {
+        Toast.show({
+          type: 'error',
+          text1: 'Error Getting Location!',
+          text2: 'Ensure your gps on',
+        });
+        console.log(error);
+        navigateToDashboard();
+      },
+    );
+    handleCurrentCoord();
   }, []);
 
   // if (!!weatherInfo.weather) {
   //   console.log(weatherInfo.weather[0].main);
   // }
 
-  return (
-    <View style={{flex: 1}}>
-      <View style={{borderBottomColor: 'black', borderBottomWidth: 2}}>
+  //  console.log("Current Coord: " + currentCoord);
+  // console.log(currentCoord);
+  // console.log(weatherInfo);
+
+  return !!currentCoord && weatherInfo.length > 0 ? (
+    <View style={styles.container}>
+      <View style={styles.mapFrame}>
         <MapView
-          style={{height: 270, width: '100%'}}
+          style={styles.map}
           showsUserLocation={true}
           followsUserLocation={true}
-          initialRegion={{
-            latitude: startingCoord.latitude,
-            longitude: startingCoord.longitude,
+          region={{
+            latitude: currentCoord.latitude,
+            longitude: currentCoord.longitude,
             latitudeDelta: 0.008,
             longitudeDelta: 0.008,
           }}>
-          {!!startingCoord && (
-            <Marker
-              coordinate={{
-                latitude: startingCoord.latitude,
-                longitude: startingCoord.longitude,
-              }}
-            />
-          )}
+          <Polyline coordinates={routeCoords} />
+          <Marker
+            coordinate={{
+              latitude: startingCoord.latitude,
+              longitude: startingCoord.longitude,
+            }}
+          />
         </MapView>
       </View>
     </View>
+  ) : (
+    <Loading />
   );
 }

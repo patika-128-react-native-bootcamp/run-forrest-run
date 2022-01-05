@@ -22,15 +22,24 @@ export default function Navigation() {
       <Stack.Navigator>
         {!!hasSession ? (
           <>
-            <Stack.Screen name={routes.MAIN_TAB} component={MainTab} options={{headerShown: false}}/>
+            <Stack.Screen
+              name={routes.MAIN_TAB}
+              component={MainTab}
+              options={{headerShown: false}}
+            />
             <Stack.Screen
               name={routes.NEW_ACTIVITY_PAGE}
               component={NewActivity}
+              options={{headerShown: false}}
             />
           </>
         ) : (
           <>
-            <Stack.Screen name={routes.AUTH_STACK} component={AuthStack} options={{headerShown: false}} />
+            <Stack.Screen
+              name={routes.AUTH_STACK}
+              component={AuthStack}
+              options={{headerShown: false}}
+            />
           </>
         )}
       </Stack.Navigator>

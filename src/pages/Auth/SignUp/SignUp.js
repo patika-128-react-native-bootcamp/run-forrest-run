@@ -1,16 +1,20 @@
 import React from 'react';
-import {View, Text, Alert, ScrollView} from 'react-native';
+import {View} from 'react-native';
 import routes from '../../../navigation/routes';
 import {Formik} from 'formik';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
+import Toast from 'react-native-toast-message';
 import styles from './SignUp.style';
 import auth from '@react-native-firebase/auth';
 
 export default function SignUp({navigation}) {
   function handleSignUp(signData) {
     if (signData.password !== signData.rePassword) {
-      Alert.alert('Passwords do not match');
+      Toast.show({
+        type: 'error',
+        text1: 'Passwords do not match',
+      });
       return;
     }
     auth()
@@ -19,22 +23,33 @@ export default function SignUp({navigation}) {
         auth().currentUser.updateProfile({
           displayName: signData.name + ' ' + signData.surname,
         });
-        Alert.alert('User account created & logged in!');
+        Toast.show({
+          type: 'success',
+          text1: 'User account created & logged in!',
+        });
         handleReturnLogin();
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
-          Alert.alert('That email address is already in use!');
+          Toast.show({
+            type: 'error',
+            text1: 'That email address is already in use!',
+          });
         }
 
         if (error.code === 'auth/invalid-email') {
-          Alert.alert('That email address is invalid!');
+          Toast.show({
+            type: 'error',
+            text1: 'That email address is invalid!',
+          });
         }
 
         if (error.code === 'auth/weak-password') {
-          Alert.alert('Password should be at least 6 characters');
+          Toast.show({
+            type: 'error',
+            text1: 'Password should be at least 6 characters',
+          });
         }
-
         console.error(error);
       });
   }

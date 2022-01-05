@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import axios from 'axios';
+import Config from 'react-native-config';
 
 export default function useWeather({latitude, longitude}) {
   const [weatherData, setWeatherData] = useState(null);
@@ -10,7 +11,7 @@ export default function useWeather({latitude, longitude}) {
     try {
       setWeatherLoading(true);
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=13ea7bc900806057f5cb50345c0c69a7`,
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${Config.WEATHER_API_KEY}`,
       );
       setWeatherData(response.data);
     } catch (error) {
