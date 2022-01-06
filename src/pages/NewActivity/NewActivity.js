@@ -1,18 +1,31 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
-import MapView, {Marker, Polyline} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import Toast from 'react-native-toast-message';
-import Loading from '../../components/Loading';
-import styles from './NewActivity.style';
+import NewActivityLayout from './layout/NewActivityLayout';
 import routes from '../../navigation/routes';
+import haversine from 'haversine';
 import {fetchWeather} from '../../services/weatherService';
 
 export default function NewActivity({navigation}) {
+  const [isStarted, setIsStarted] = useState(false);
+  const [watchID, setWatchID] = useState();
   const [startingCoord, setStartingCoord] = useState();
   const [currentCoord, setCurrentCoord] = useState();
+  const [distance, setDistance] = useState(0);
   const [routeCoords, setRouteCoords] = useState([]);
-  const [weatherInfo, setWeatherInfo] = useState([]);
+  const [weatherInfo, setWeatherInfo] = useState();
+  const [resultsModalVisible, setResultsModalVisible] = useState(false);
+
+  function handleStartActivity() {
+    setIsStarted(true);
+    handleCurrentPosition();
+  }
+
+  function handleFinishActivity() {
+    setIsStarted(false);
+    Geolocation.clearWatch(watchID);
+    setResultsModalVisible(true);
+  }
 
   async function handleFetchWeather(latitude, longitude) {
     try {
@@ -33,7 +46,7 @@ export default function NewActivity({navigation}) {
   }
 
   useEffect(() => {
-    if (!!currentCoord) {
+    if (!!currentCoord && isStarted) {
       setRouteCoords([
         ...routeCoords,
         {
@@ -44,10 +57,30 @@ export default function NewActivity({navigation}) {
     }
   }, [currentCoord]);
 
-  function handleCurrentCoord() {
-    Geolocation.watchPosition(
+  function handleCurrentPosition() {
+    let oldLocation = null;
+    let newDistance = 0;
+    let watchId = null;
+    watchId = Geolocation.watchPosition(
       position => {
+        if (!!oldLocation) {
+          newDistance =
+            newDistance +
+            haversine(
+              {
+                latitude: oldLocation.latitude,
+                longitude: oldLocation.longitude,
+              },
+              {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+              },
+              {unit: 'meter'},
+            );
+          setDistance(newDistance.toFixed(0));
+        }
         setCurrentCoord(position.coords);
+        oldLocation = position.coords;
       },
       error => {
         Toast.show({
@@ -64,14 +97,15 @@ export default function NewActivity({navigation}) {
         timeout: 10000,
       },
     );
+    setWatchID(watchId);
   }
 
   useEffect(() => {
     Geolocation.getCurrentPosition(
-      info => {
-        setStartingCoord(info.coords);
-        setCurrentCoord(info.coords);
-        handleFetchWeather(info.coords.latitude, info.coords.longitude);
+      position => {
+        setStartingCoord(position.coords);
+        setCurrentCoord(position.coords);
+        handleFetchWeather(position.coords.latitude, position.coords.longitude);
       },
       error => {
         Toast.show({
@@ -83,41 +117,23 @@ export default function NewActivity({navigation}) {
         navigateToDashboard();
       },
     );
-    handleCurrentCoord();
   }, []);
 
   // if (!!weatherInfo.weather) {
   //   console.log(weatherInfo.weather[0].main);
   // }
 
-  //  console.log("Current Coord: " + currentCoord);
-  // console.log(currentCoord);
-  // console.log(weatherInfo);
-
-  return !!currentCoord && weatherInfo.length > 0 ? (
-    <View style={styles.container}>
-      <View style={styles.mapFrame}>
-        <MapView
-          style={styles.map}
-          showsUserLocation={true}
-          followsUserLocation={true}
-          region={{
-            latitude: currentCoord.latitude,
-            longitude: currentCoord.longitude,
-            latitudeDelta: 0.008,
-            longitudeDelta: 0.008,
-          }}>
-          <Polyline coordinates={routeCoords} />
-          <Marker
-            coordinate={{
-              latitude: startingCoord.latitude,
-              longitude: startingCoord.longitude,
-            }}
-          />
-        </MapView>
-      </View>
-    </View>
-  ) : (
-    <Loading />
+  //weatherInfo.length > 0
+  return (
+    <NewActivityLayout
+      startingCoord={startingCoord}
+      currentCoord={currentCoord}
+      weatherInfo={weatherInfo}
+      distance={distance}
+      routeCoords={routeCoords}
+      resultsModalVisible={resultsModalVisible}
+      handleStartActivity={() => handleStartActivity()}
+      handleFinishActivity={() => handleFinishActivity()}
+    />
   );
 }
