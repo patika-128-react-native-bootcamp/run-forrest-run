@@ -60,7 +60,7 @@ export default function Login({navigation}) {
       </Formik>
       <Button
         label="Sign Up"
-        theme="secondary"
+        type="secondary"
         onPress={handleNavigateSignUp}
       />
     </View>

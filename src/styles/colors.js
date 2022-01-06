@@ -1,4 +1,4 @@
 export default {
   textColor: 'white',
-  themeColor: '#7dd5f7',
+  themeColor: '#00e5ff',
 };

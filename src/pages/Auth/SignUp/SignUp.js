@@ -108,7 +108,7 @@ export default function SignUp({navigation}) {
           </View>
         )}
       </Formik>
-      <Button label="Back" theme="secondary" onPress={handleReturnLogin} />
+      <Button label="Back" type="secondary" onPress={handleReturnLogin} />
     </View>
   );
 }

@@ -1,9 +1,11 @@
 import React from 'react';
-import {View, Text, Button} from 'react-native';
+import {View, Text} from 'react-native';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import Loading from '../../../components/Loading';
 import styles from './NewActivityLayout.style';
+import Button from '../../../components/Button';
 import ResultsModal from '../../../components/ResultsModal';
+import ActivityCard from '../../../components/cards/ActivityCard';
 
 export default function NewActivityLayout(props) {
   return !!props.currentCoord && !!props.weatherInfo ? (
@@ -33,11 +35,19 @@ export default function NewActivityLayout(props) {
         </MapView>
       </View>
       <Text>Distance: {props.distance}</Text>
-      <Button title="START" onPress={() => props.handleStartActivity()} />
-      <Button title="FINISH" onPress={() => props.handleFinishActivity()} />
+      <ActivityCard
+        weatherInfo={props.weatherInfo}
+        distance={props.distance}
+        time={props.time}
+        isStarted={props.isStarted}
+        handleStartActivity={() => props.handleStartActivity()}
+        handleStopActivity={() => props.handleStopActivity()}
+      />
       <ResultsModal
         isVisible={props.resultsModalVisible}
+        setResultsModalVisible={() => props.setResultsModalVisible()}
         distance={props.distance}
+        time={props.time}
         routeCoords={props.routeCoords}
         weatherInfo={props.weatherInfo}
       />

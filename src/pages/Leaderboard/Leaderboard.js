@@ -8,7 +8,7 @@ export default function Leaderboard() {
   // const [time, setTime] = useState({s: 0, m: 0});
   const [interv, setInterv] = useState();
 
-  const {time, start, stop} = useStopwatch();
+  const {time, startStopwatch, stopStopwatch} = useStopwatch();
 
   // const start = () => {
   //   run();
@@ -61,8 +61,8 @@ export default function Leaderboard() {
   return (
     <View>
       <Button title="console haversine" onPress={() => haversine()} />
-      <Button title="Start Stopwatch" onPress={() => start()} />
-      <Button title="Stop Stopwatch" onPress={() => stop()} />
+      <Button title="Start Stopwatch" onPress={() => startStopwatch()} />
+      <Button title="Stop Stopwatch" onPress={() => stopStopwatch()} />
       <Text>
         {time.minute >= 10 ? time.minute : '0' + time.minute}:
         {time.second >= 10 ? time.second : '0' + time.second}

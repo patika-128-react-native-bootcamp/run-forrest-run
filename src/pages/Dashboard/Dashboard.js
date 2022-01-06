@@ -22,14 +22,14 @@ export default function Dashboard({navigation}) {
   }
 
   return (
-    <View style={{alignItems: 'center', justifyContent: 'space-between'}}>
+    <View style={{alignItems: 'center', justifyContent: 'space-between', backgroundColor:'black'}}>
         <TotalInfoCard />
         <Button
           label={'Sign Out'}
           onPress={handleSignOut}></Button>
         <Button
           label={'START'}
-          theme="roundPrimary"
+          type="roundPrimary"
           onPress={navigateToNewActivity}></Button>
     </View>
   );

@@ -13,6 +13,7 @@ const base_style = StyleSheet.create({
     justifyContent: 'center',
   },
   label: {
+    fontSize: fontSizes.huge,
     fontWeight: 'bold',
   },
 });
@@ -30,11 +31,25 @@ export default {
     },
   }),
 
+  primaryNegative: StyleSheet.create({
+    ...base_style,
+    container: {
+      ...base_style.container,
+      backgroundColor: '#c62828',
+      borderWidth: 1,
+      borderColor: 'white',
+    },
+    label: {
+      ...base_style.label,
+      color: 'white',
+    },
+  }),
+
   secondary: StyleSheet.create({
     ...base_style,
     container: {
       ...base_style.container,
-      borderWidth: 1,
+      borderWidth: 1.5,
       borderColor: colors.themeColor,
     },
     label: {

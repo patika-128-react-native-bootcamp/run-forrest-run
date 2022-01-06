@@ -4,7 +4,7 @@ export default function useStopwatch() {
   const [time, setTime] = useState({second: 0, minute: 0});
   const [interv, setInterv] = useState();
 
-  const start = () => {
+  const startStopwatch = () => {
     run();
     setInterv(setInterval(run, 1000));
   };
@@ -21,13 +21,13 @@ export default function useStopwatch() {
     return setTime({second: updatedSecond, minute: updatedMinute});
   };
 
-  const stop = () => {
+  const stopStopwatch = () => {
     clearInterval(interv);
   };
 
   return {
     time,
-    start,
-    stop,
+    startStopwatch,
+    stopStopwatch,
   };
 }

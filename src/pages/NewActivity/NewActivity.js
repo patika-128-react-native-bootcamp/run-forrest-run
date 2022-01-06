@@ -5,6 +5,7 @@ import NewActivityLayout from './layout/NewActivityLayout';
 import routes from '../../navigation/routes';
 import haversine from 'haversine';
 import {fetchWeather} from '../../services/weatherService';
+import useStopwatch from '../../hooks/useStopwatch';
 
 export default function NewActivity({navigation}) {
   const [isStarted, setIsStarted] = useState(false);
@@ -16,14 +17,18 @@ export default function NewActivity({navigation}) {
   const [weatherInfo, setWeatherInfo] = useState();
   const [resultsModalVisible, setResultsModalVisible] = useState(false);
 
+  const {time, startStopwatch, stopStopwatch} = useStopwatch();
+
   function handleStartActivity() {
     setIsStarted(true);
     handleCurrentPosition();
+    startStopwatch();
   }
 
-  function handleFinishActivity() {
+  function handleStopActivity() {
     setIsStarted(false);
     Geolocation.clearWatch(watchID);
+    stopStopwatch();
     setResultsModalVisible(true);
   }
 
@@ -123,17 +128,23 @@ export default function NewActivity({navigation}) {
   //   console.log(weatherInfo.weather[0].main);
   // }
 
+  console.log(weatherInfo);
+  console.log(currentCoord);
+
   //weatherInfo.length > 0
   return (
     <NewActivityLayout
+      isStarted={isStarted}
       startingCoord={startingCoord}
       currentCoord={currentCoord}
       weatherInfo={weatherInfo}
       distance={distance}
+      time={time}
       routeCoords={routeCoords}
       resultsModalVisible={resultsModalVisible}
+      setResultsModalVisible={() => setResultsModalVisible()}
       handleStartActivity={() => handleStartActivity()}
-      handleFinishActivity={() => handleFinishActivity()}
+      handleStopActivity={() => handleStopActivity()}
     />
   );
 }

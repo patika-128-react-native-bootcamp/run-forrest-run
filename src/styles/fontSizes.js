@@ -1,9 +1,9 @@
 export default {
-  tiny: 10,
-  small: 13,
-  normal: 15,
-  big: 18,
-  huge: 23,
+  tiny: 13,
+  small: 15,
+  normal: 18,
+  big: 20,
+  huge: 25,
   title: 30,
-  bigTitle: 40,
+  bigTitle: 45,
 };
