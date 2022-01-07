@@ -128,9 +128,6 @@ export default function NewActivity({navigation}) {
   //   console.log(weatherInfo.weather[0].main);
   // }
 
-  console.log(weatherInfo);
-  console.log(currentCoord);
-
   //weatherInfo.length > 0
   return (
     <NewActivityLayout

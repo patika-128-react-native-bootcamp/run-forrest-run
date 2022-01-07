@@ -6,6 +6,7 @@ import styles from './ActivityCard.style';
 import Button from '../../Button';
 
 export default function ActivityCard(props) {
+  //TODO Style dosyası
   return (
     <View style={{flex: 1, justifyContent: 'space-around', marginBottom: 20}}>
       <View style={styles.rowContainer}>
@@ -53,9 +54,7 @@ export default function ActivityCard(props) {
           onPress={() => props.handleStopActivity()}
         />
       ) : (
-        <View>
-          <Button label={'START'} onPress={() => props.handleStartActivity()} />
-        </View>
+        <Button label={'START'} onPress={() => props.handleStartActivity()} />
       )}
     </View>
   );

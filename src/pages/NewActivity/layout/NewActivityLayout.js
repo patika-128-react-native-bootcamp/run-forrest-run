@@ -3,7 +3,6 @@ import {View, Text} from 'react-native';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import Loading from '../../../components/Loading';
 import styles from './NewActivityLayout.style';
-import Button from '../../../components/Button';
 import ResultsModal from '../../../components/ResultsModal';
 import ActivityCard from '../../../components/cards/ActivityCard';
 
@@ -46,10 +45,10 @@ export default function NewActivityLayout(props) {
       <ResultsModal
         isVisible={props.resultsModalVisible}
         setResultsModalVisible={() => props.setResultsModalVisible()}
+        routeCoords={props.routeCoords}
+        currentCoord={props.currentCoord}
         distance={props.distance}
         time={props.time}
-        routeCoords={props.routeCoords}
-        weatherInfo={props.weatherInfo}
       />
     </View>
   ) : (

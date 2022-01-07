@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import colors from '../../styles/colors';
 import spacing from '../../styles/spacing';
 import radius from '../../styles/radius';
@@ -14,28 +14,13 @@ export default StyleSheet.create({
     backgroundColor: 'black',
     justifyContent: 'space-between',
   },
-  statisticsTextView: {
-    alignItems: 'center',
-  },
-  statisticsText: {
-    color: 'white',
-    fontSize: 50,
-  },
   valuesView: {
-    flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-around',
   },
-  distance: {
-    fontSize: 100,
-    color: colors.themeColor,
-  },
-  metersText: {
-    fontSize: 30,
-    color: 'white',
-  },
-  time: {
-    color: colors.themeColor,
-    fontSize: 60,
-    marginTop: 15,
+  map: {
+    height: Dimensions.get('window').height / 3,
+    width: '100%',
   },
 });
