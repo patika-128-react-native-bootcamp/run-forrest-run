@@ -1,5 +1,6 @@
 import {Dimensions, StyleSheet} from 'react-native';
 import colors from '../../../styles/colors';
+import spacing from '../../../styles/spacing';
 
 export default StyleSheet.create({
   container: {
@@ -15,5 +16,9 @@ export default StyleSheet.create({
   map: {
     height: Dimensions.get('window').height / 2.4,
     width: '100%',
+  },
+  buttonView: {
+    marginBottom: spacing.normal,
+    marginHorizontal: spacing.normal,
   },
 });

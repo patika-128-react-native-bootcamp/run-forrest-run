@@ -5,14 +5,17 @@ import spacing from '../../../styles/spacing';
 
 export default StyleSheet.create({
   container: {
-    alignItems: 'center',
+    flex: 1,
     justifyContent: 'space-around',
-    padding: spacing.small,
-    width: '100%',
+    marginBottom: 20,
   },
   rowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
+  },
+  weatherIcon: {
+    width: 90,
+    height: 90,
   },
 });

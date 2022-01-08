@@ -6,6 +6,8 @@ import routes from '../../navigation/routes';
 import haversine from 'haversine';
 import {fetchWeather} from '../../services/weatherService';
 import useStopwatch from '../../hooks/useStopwatch';
+import database from '@react-native-firebase/database';
+import auth from '@react-native-firebase/auth';
 
 export default function NewActivity({navigation}) {
   const [isStarted, setIsStarted] = useState(false);
@@ -19,18 +21,36 @@ export default function NewActivity({navigation}) {
 
   const {time, startStopwatch, stopStopwatch} = useStopwatch();
 
-  function handleStartActivity() {
-    setIsStarted(true);
-    handleCurrentPosition();
-    startStopwatch();
-  }
+  useEffect(() => {
+    Geolocation.getCurrentPosition(
+      position => {
+        setStartingCoord(position.coords);
+        setCurrentCoord(position.coords);
+        handleFetchWeather(position.coords.latitude, position.coords.longitude);
+      },
+      error => {
+        Toast.show({
+          type: 'error',
+          text1: 'Error Getting Location!',
+          text2: 'Ensure your gps on',
+        });
+        console.log(error);
+        navigateToDashboard();
+      },
+    );
+  }, []);
 
-  function handleStopActivity() {
-    setIsStarted(false);
-    Geolocation.clearWatch(watchID);
-    stopStopwatch();
-    setResultsModalVisible(true);
-  }
+  useEffect(() => {
+    if (!!currentCoord && isStarted) {
+      setRouteCoords([
+        ...routeCoords,
+        {
+          latitude: currentCoord.latitude,
+          longitude: currentCoord.longitude,
+        },
+      ]);
+    }
+  }, [currentCoord]);
 
   async function handleFetchWeather(latitude, longitude) {
     try {
@@ -45,22 +65,6 @@ export default function NewActivity({navigation}) {
       navigateToDashboard();
     }
   }
-
-  function navigateToDashboard() {
-    navigation.navigate(routes.DASHBOARD_PAGE);
-  }
-
-  useEffect(() => {
-    if (!!currentCoord && isStarted) {
-      setRouteCoords([
-        ...routeCoords,
-        {
-          latitude: currentCoord.latitude,
-          longitude: currentCoord.longitude,
-        },
-      ]);
-    }
-  }, [currentCoord]);
 
   function handleCurrentPosition() {
     let oldLocation = null;
@@ -105,24 +109,41 @@ export default function NewActivity({navigation}) {
     setWatchID(watchId);
   }
 
-  useEffect(() => {
-    Geolocation.getCurrentPosition(
-      position => {
-        setStartingCoord(position.coords);
-        setCurrentCoord(position.coords);
-        handleFetchWeather(position.coords.latitude, position.coords.longitude);
-      },
-      error => {
-        Toast.show({
-          type: 'error',
-          text1: 'Error Getting Location!',
-          text2: 'Ensure your gps on',
-        });
-        console.log(error);
-        navigateToDashboard();
-      },
+  function handleStartActivity() {
+    setIsStarted(true);
+    handleCurrentPosition();
+    startStopwatch();
+  }
+
+  function handleStopActivity() {
+    setIsStarted(false);
+    Geolocation.clearWatch(watchID);
+    stopStopwatch();
+    setResultsModalVisible(true);
+  }
+
+  function saveActivityToDatabase() {
+    const activitiesReference = database().ref(
+      `activities/${auth().currentUser.uid}`,
     );
-  }, []);
+    activitiesReference.push({
+      routeCoords: routeCoords,
+      distance: distance,
+      time: time,
+      weatherInfo: weatherInfo,
+      date: Date.now(),
+    });
+  }
+
+  function handleFinishActivity() {
+    saveActivityToDatabase();
+    setResultsModalVisible(false);
+    navigateToDashboard();
+  }
+
+  function navigateToDashboard() {
+    navigation.navigate(routes.DASHBOARD_PAGE);
+  }
 
   // if (!!weatherInfo.weather) {
   //   console.log(weatherInfo.weather[0].main);
@@ -142,6 +163,7 @@ export default function NewActivity({navigation}) {
       setResultsModalVisible={() => setResultsModalVisible()}
       handleStartActivity={() => handleStartActivity()}
       handleStopActivity={() => handleStopActivity()}
+      handleFinishActivity={() => handleFinishActivity()}
     />
   );
 }

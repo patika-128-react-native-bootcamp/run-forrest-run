@@ -19,8 +19,8 @@ export default function Login({navigation}) {
       .then(() => {
         Toast.show({
           type: 'success',
-          text1: 'Login Failed!',
-          text2: 'An error occurred while login.',
+          text1: 'Login Successful',
+          text2: 'Lets start an activity!',
         });
       })
       .catch(error => {
@@ -58,11 +58,7 @@ export default function Login({navigation}) {
           </View>
         )}
       </Formik>
-      <Button
-        label="Sign Up"
-        type="secondary"
-        onPress={handleNavigateSignUp}
-      />
+      <Button label="Sign Up" type="secondary" onPress={handleNavigateSignUp} />
     </View>
   );
 }

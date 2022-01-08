@@ -5,6 +5,7 @@ import auth from '@react-native-firebase/auth';
 import routes from './routes';
 import AuthStack from './AuthStack';
 import NewActivity from '../pages/NewActivity';
+import ActivityDetail from '../pages/ActivityDetail';
 import MainTab from './MainTab';
 
 export default function Navigation() {
@@ -31,6 +32,10 @@ export default function Navigation() {
               name={routes.NEW_ACTIVITY_PAGE}
               component={NewActivity}
               options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name={routes.ACTIVITY_DETAIL_PAGE}
+              component={ActivityDetail}
             />
           </>
         ) : (

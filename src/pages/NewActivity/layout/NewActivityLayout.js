@@ -5,6 +5,7 @@ import Loading from '../../../components/Loading';
 import styles from './NewActivityLayout.style';
 import ResultsModal from '../../../components/ResultsModal';
 import ActivityCard from '../../../components/cards/ActivityCard';
+import Button from '../../../components/Button';
 
 export default function NewActivityLayout(props) {
   return !!props.currentCoord && !!props.weatherInfo ? (
@@ -38,10 +39,21 @@ export default function NewActivityLayout(props) {
         weatherInfo={props.weatherInfo}
         distance={props.distance}
         time={props.time}
-        isStarted={props.isStarted}
-        handleStartActivity={() => props.handleStartActivity()}
-        handleStopActivity={() => props.handleStopActivity()}
       />
+      {props.isStarted ? (
+        <View srtyle={styles.buttonView}>
+          <Button
+            label={'STOP'}
+            type="primaryNegative"
+            onPress={() => props.handleStopActivity()}
+          />
+        </View>
+      ) : (
+        <View style={styles.buttonView}>
+          <Button label={'START'} onPress={() => props.handleStartActivity()} />
+        </View>
+      )}
+
       <ResultsModal
         isVisible={props.resultsModalVisible}
         setResultsModalVisible={() => props.setResultsModalVisible()}
@@ -49,6 +61,7 @@ export default function NewActivityLayout(props) {
         currentCoord={props.currentCoord}
         distance={props.distance}
         time={props.time}
+        handleFinishActivity={() => props.handleFinishActivity()}
       />
     </View>
   ) : (

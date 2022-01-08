@@ -33,6 +33,19 @@ export default {
     },
   }),
 
+  secondary: StyleSheet.create({
+    ...base_style,
+    label: {
+      ...base_style.label,
+      fontSize: fontSizes.big,
+    },
+    value: {
+      ...base_style.value,
+      fontSize: fontSizes.title,
+      color: colors.textColor,
+    },
+  }),
+
   bigSize: StyleSheet.create({
     ...base_style,
     label: {

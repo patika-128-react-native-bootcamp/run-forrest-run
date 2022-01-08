@@ -1,44 +1,53 @@
-import React, {useRef} from 'react';
-import {View, Text} from 'react-native';
-import MapView from 'react-native-maps';
-import Share from 'react-native-share';
-import ViewShot from 'react-native-view-shot';
-import Button from '../../components/Button';
+import React, {useEffect, useState} from 'react';
+import {View, Alert, FlatList} from 'react-native';
+import Loading from '../../components/Loading';
+import useFetchData from '../../hooks/useFetchData';
+import routes from '../../navigation/routes';
+import auth from '@react-native-firebase/auth';
+import styles from './PastActivities.style';
+import PastActivityCard from '../../components/cards/PastActivityCard/PastActivityCard';
 
-export default function PastActivities() {
-  const viewShotRef = useRef();
+export default function PastActivities({navigation}) {
+  const [activityList, setActivityList] = useState([]);
 
-  const shareResults = async () => {
-    const imageURI = await viewShotRef.current.capture();
-    try {
-      await Share.open({url: imageURI});
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const {data, dataError, dataLoading} = useFetchData(
+    `activities/${auth().currentUser.uid}`,
+  );
+
+  useEffect(() => {
+    setActivityList(data);
+  }, [data]);
+
+  function navigateToActivityDetail(activityInfo) {
+    navigation.navigate(routes.ACTIVITY_DETAIL_PAGE, {
+      activityInfo: activityInfo,
+    });
+  }
+
+  if (dataError) {
+    Alert.alert('Error while fetching data.');
+  }
+
+  const renderActivities = ({item}) => (
+    <PastActivityCard
+      activityDate={item.date}
+      activityDistance={item.distance}
+      activityTime={item.time}
+      onButtonPress={() => navigateToActivityDetail(item)}
+    />
+  );
 
   return (
-    <View>
-      <Text>AAAAAAAAAAAAAAAAAAAA</Text>
-      <Button label={'Share'} onPress={() => shareResults()}></Button>
-      <ViewShot ref={viewShotRef} options={{format: 'jpg', quality: 1.0}}>
-        <MapView
-        style={{width:'100%', height:300}}
-          region={{
-            latitude: 34,
-            longitude: 65,
-            latitudeDelta: 0.08,
-            longitudeDelta: 0.08,
-          }}>
-        </MapView>
-        <View >
-          <Text >421</Text>
-          <Text style={{color:'red', fontSize:30}} >METERS</Text>
-          <Text >
-            04:21
-          </Text>
-        </View>
-      </ViewShot>
+    <View style={styles.container}>
+      {dataLoading && <Loading />}
+      <FlatList
+        data={activityList}
+        renderItem={renderActivities}
+        keyExtractor={item => item.id}
+        ItemSeparatorComponent={() => {
+          return <View style={styles.seperator} />;
+        }}
+      />
     </View>
   );
 }

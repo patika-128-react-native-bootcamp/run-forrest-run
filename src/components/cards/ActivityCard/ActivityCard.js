@@ -3,12 +3,10 @@ import {View, Text, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CardItem from './CardItem';
 import styles from './ActivityCard.style';
-import Button from '../../Button';
 
 export default function ActivityCard(props) {
-  //TODO Style dosyası
   return (
-    <View style={{flex: 1, justifyContent: 'space-around', marginBottom: 20}}>
+    <View style={styles.container}>
       <View style={styles.rowContainer}>
         <CardItem
           itemLabel={'Meters'}
@@ -41,21 +39,12 @@ export default function ActivityCard(props) {
           itemValue={props.weatherInfo.main.temp.toFixed(0) - 273 + '°C'}
         />
         <Image
-          style={{width: 90, height: 90}}
+          style={styles.weatherIcon}
           source={{
             uri: `http://openweathermap.org/img/wn/${props.weatherInfo.weather[0].icon}@2x.png`,
           }}
         />
       </View>
-      {props.isStarted ? (
-        <Button
-          label={'STOP'}
-          type="primaryNegative"
-          onPress={() => props.handleStopActivity()}
-        />
-      ) : (
-        <Button label={'START'} onPress={() => props.handleStartActivity()} />
-      )}
     </View>
   );
 }
