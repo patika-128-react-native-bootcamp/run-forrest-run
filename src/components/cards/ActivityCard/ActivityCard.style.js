@@ -8,6 +8,10 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'space-around',
     marginBottom: 20,
+    padding: spacing.small,
+    backgroundColor: 'rgba(0, 0, 30, 0.3);',
+    borderRadius: 20,
+    width: Dimensions.get('window').width / 1.1,
   },
   rowContainer: {
     flexDirection: 'row',

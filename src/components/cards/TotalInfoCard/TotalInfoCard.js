@@ -1,19 +1,44 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import CardItem from '../CardItem';
+import TotalInfoCardItem from './TotalInfoCardItem';
 import styles from './TotalInfoCard.style';
 
-export default function TotalInfoCard() {
+export default function TotalInfoCard({
+  totalDistance,
+  totalTime,
+  activityCount,
+}) {
   return (
     <View style={styles.container}>
-      <View>
-        <CardItem itemLabel={'Kilometers'} itemValue={'32,5'} />
-        <CardItem itemLabel={'Activity Count'} itemValue={'8'} />
+      <View style={{alignItems: 'center'}}>
+        <Text style={{fontSize: 30, fontWeight: 'bold', color: 'white'}}>
+          Your Stats
+        </Text>
       </View>
-      <View>
-        <CardItem itemLabel={'Activity Time'} itemValue={'12,3'} />
-        <CardItem itemLabel={'Activity Count'} itemValue={'12'} />
+      <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+        <TotalInfoCardItem
+          itemLabel={'Total Distance'}
+          itemValue={totalDistance}
+        />
+        <TotalInfoCardItem
+          itemLabel={'Total Time'}
+          itemValue={
+            <Text>
+              {totalTime.minute >= 10
+                ? totalTime.minute
+                : '0' + totalTime.minute}
+              :
+              {totalTime.second >= 10
+                ? totalTime.second
+                : '0' + totalTime.second}
+            </Text>
+          }
+        />
       </View>
+      <TotalInfoCardItem
+        itemLabel={'Activity Count'}
+        itemValue={activityCount}
+      />
     </View>
   );
 }

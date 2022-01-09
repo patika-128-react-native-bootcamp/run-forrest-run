@@ -9,8 +9,16 @@ export default function AuthStack() {
 
   return (
     <Stack.Navigator>
-      <Stack.Screen name={routes.LOGIN_PAGE} component={Login} />
-      <Stack.Screen name={routes.SIGN_UP_PAGE} component={SignUp} />
+      <Stack.Screen
+        name={routes.LOGIN_PAGE}
+        component={Login}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name={routes.SIGN_UP_PAGE}
+        component={SignUp}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 }

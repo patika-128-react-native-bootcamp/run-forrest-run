@@ -5,5 +5,5 @@ export default {
   big: 20,
   huge: 25,
   title: 30,
-  bigTitle: 45,
+  bigTitle: 40,
 };

@@ -1,19 +1,19 @@
 import React from 'react';
 import {View, Text, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import CardItem from './CardItem';
+import ValueItem from '../ValueItem';
 import styles from './ActivityCard.style';
 
 export default function ActivityCard(props) {
   return (
     <View style={styles.container}>
       <View style={styles.rowContainer}>
-        <CardItem
+        <ValueItem
           itemLabel={'Meters'}
           itemValue={props.distance}
           type="bigSize"
         />
-        <CardItem
+        <ValueItem
           itemLabel={<Icon name="timer-outline" size={35} />}
           itemValue={
             <Text>
@@ -30,11 +30,11 @@ export default function ActivityCard(props) {
         />
       </View>
       <View style={styles.rowContainer}>
-        <CardItem
+        <ValueItem
           itemLabel={<Icon name="weather-windy" size={30} />}
           itemValue={props.weatherInfo.wind.speed}
         />
-        <CardItem
+        <ValueItem
           itemLabel={<Icon name="thermometer" size={30} />}
           itemValue={props.weatherInfo.main.temp.toFixed(0) - 273 + '°C'}
         />

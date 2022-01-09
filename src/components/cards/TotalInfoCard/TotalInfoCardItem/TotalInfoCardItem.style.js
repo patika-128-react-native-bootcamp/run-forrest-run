@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
-import colors from '../../../styles/colors';
-import fontSizes from '../../../styles/fontSizes';
-import spacing from '../../../styles/spacing';
+import colors from '../../../../styles/colors';
+import fontSizes from '../../../../styles/fontSizes';
+import spacing from '../../../../styles/spacing';
 
 export default StyleSheet.create({
   container: {
@@ -10,19 +10,18 @@ export default StyleSheet.create({
     marginVertical: spacing.normal,
   },
   valueFrame: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    borderWidth: 2,
+    padding: spacing.large,
+    borderRadius: 100,
+    minWidth: 100,
+    borderWidth: 1,
     borderColor: 'white',
-    backgroundColor: 'black',
+    backgroundColor: 'rgba(30, 0, 50, 0.3);',
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: spacing.micro,
   },
   label: {
     fontSize: fontSizes.big,
-    fontWeight: 'bold',
     color: colors.textColor,
   },
   value: {

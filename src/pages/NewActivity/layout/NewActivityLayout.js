@@ -2,19 +2,25 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import Loading from '../../../components/Loading';
+import LinearGradient from 'react-native-linear-gradient';
 import styles from './NewActivityLayout.style';
 import ResultsModal from '../../../components/ResultsModal';
 import ActivityCard from '../../../components/cards/ActivityCard';
 import Button from '../../../components/Button';
+import {mapTheme} from '../../../styles/mapTheme'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function NewActivityLayout(props) {
   return !!props.currentCoord && !!props.weatherInfo ? (
-    <View style={styles.container}>
+    <LinearGradient
+      colors={['#fdd3ce', '#fdd3ce', '#e786d6', '#4db7ef']}
+      style={styles.container}>
       <View style={styles.mapFrame}>
         <MapView
           style={styles.map}
           showsUserLocation={true}
           followsUserLocation={true}
+          customMapStyle={mapTheme}
           region={{
             latitude: props.currentCoord.latitude,
             longitude: props.currentCoord.longitude,
@@ -30,18 +36,20 @@ export default function NewActivityLayout(props) {
             coordinate={{
               latitude: props.startingCoord.latitude,
               longitude: props.startingCoord.longitude,
-            }}
-          />
+            }}>
+            <Icon name="map-marker" size={40} color={'blue'} />
+          </Marker>
         </MapView>
       </View>
-      <Text>Distance: {props.distance}</Text>
-      <ActivityCard
-        weatherInfo={props.weatherInfo}
-        distance={props.distance}
-        time={props.time}
-      />
+      <View style={styles.cardView}>
+        <ActivityCard
+          weatherInfo={props.weatherInfo}
+          distance={props.distance}
+          time={props.time}
+        />
+      </View>
       {props.isStarted ? (
-        <View srtyle={styles.buttonView}>
+        <View style={styles.buttonView}>
           <Button
             label={'STOP'}
             type="primaryNegative"
@@ -50,7 +58,11 @@ export default function NewActivityLayout(props) {
         </View>
       ) : (
         <View style={styles.buttonView}>
-          <Button label={'START'} onPress={() => props.handleStartActivity()} />
+          <Button
+            label={'START'}
+            onPress={() => props.handleStartActivity()}
+            type="transparent"
+          />
         </View>
       )}
 
@@ -63,7 +75,7 @@ export default function NewActivityLayout(props) {
         time={props.time}
         handleFinishActivity={() => props.handleFinishActivity()}
       />
-    </View>
+    </LinearGradient>
   ) : (
     <Loading />
   );

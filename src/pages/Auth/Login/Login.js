@@ -1,6 +1,8 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Image} from 'react-native';
+import LottieView from 'lottie-react-native';
 import {Formik} from 'formik';
+import LinearGradient from 'react-native-linear-gradient';
 import Input from '../../../components/Input';
 import routes from '../../../navigation/routes';
 import styles from './Login.style';
@@ -33,8 +35,15 @@ export default function Login({navigation}) {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.logo}>👟</Text>
+    <LinearGradient colors={['#d1fffd', '#f4b6e2']} style={styles.container}>
+      {/* <Image source={'../../../assets/lala.jpg'} style={{width:'100%',height:400, resizeMode:'contain'}}/>   */}
+      <View style={{width: '100%', height: 230}}>
+        <LottieView
+          source={require('../../../assets/walking.json')}
+          autoPlay
+          loop
+        />
+      </View>
       <Formik
         initialValues={{email: '', password: ''}}
         onSubmit={formValues => handleLogin(formValues)}>
@@ -54,11 +63,15 @@ export default function Login({navigation}) {
               value={values.password}
               onChangeText={handleChange('password')}
             />
-            <Button label="Sign In" onPress={handleSubmit} />
+            <Button label="Log In" onPress={handleSubmit} type="transparent" />
+            <Button
+              label="Sign Up"
+              type="secondary"
+              onPress={handleNavigateSignUp}
+            />
           </View>
         )}
       </Formik>
-      <Button label="Sign Up" type="secondary" onPress={handleNavigateSignUp} />
-    </View>
+    </LinearGradient>
   );
 }

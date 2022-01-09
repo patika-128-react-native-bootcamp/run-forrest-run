@@ -3,11 +3,11 @@ import {Dimensions, StyleSheet} from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    alignItems: 'center',
   },
   seperator: {
     backgroundColor: 'white',
-    height: 1,
+    height: 2,
     width: '100%',
     flexDirection: 'row',
   },

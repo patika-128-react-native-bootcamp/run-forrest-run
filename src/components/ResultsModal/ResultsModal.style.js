@@ -5,22 +5,21 @@ import radius from '../../styles/radius';
 
 export default StyleSheet.create({
   modalView: {
-    flex: 1,
-    paddingVertical: spacing.large,
-    paddingHorizontal: spacing.small,
     borderRadius: radius.normal,
     borderWidth: 3,
-    borderColor: colors.themeColor,
-    backgroundColor: 'black',
+    borderColor: 'white',
+  },
+  linearGradient: {
+    flex: 1,
     justifyContent: 'space-between',
   },
   valuesView: {
     flexDirection: 'row',
-    alignItems: 'center',
+    marginTop: spacing.large,
     justifyContent: 'space-around',
   },
-  map: {
-    height: Dimensions.get('window').height / 3,
-    width: '100%',
+  buttonsContainer: {
+    marginBottom: spacing.normal,
+    padding: spacing.micro,
   },
 });

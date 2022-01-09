@@ -36,6 +36,7 @@ export default function Navigation() {
             <Stack.Screen
               name={routes.ACTIVITY_DETAIL_PAGE}
               component={ActivityDetail}
+              options={{headerShown: false}}
             />
           </>
         ) : (

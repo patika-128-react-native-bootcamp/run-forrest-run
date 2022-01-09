@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './PastActivityCard.style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import CardItem from '../ActivityCard/CardItem';
+import ValueItem from '../ValueItem';
 
 export default function PastActivityCard({
   activityDate,
@@ -18,13 +18,13 @@ export default function PastActivityCard({
         </Text>
       </View>
       <View style={styles.valuesView}>
-        <CardItem
+        <ValueItem
           itemLabel={'Meters'}
           itemValue={activityDistance}
           type="secondary"
         />
         <View style={styles.valueSeperator} />
-        <CardItem
+        <ValueItem
           itemLabel={<Icon name="timer-outline" size={30} />}
           itemValue={
             <Text>

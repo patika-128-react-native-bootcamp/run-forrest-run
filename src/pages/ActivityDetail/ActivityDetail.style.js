@@ -9,4 +9,9 @@ export default StyleSheet.create({
     height: Dimensions.get('window').height / 2.4,
     width: '100%',
   },
+  cardView: {
+    flex: 1,
+    alignItems: 'center',
+    marginTop: 20,
+  },
 });

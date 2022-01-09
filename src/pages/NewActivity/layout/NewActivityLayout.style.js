@@ -14,8 +14,13 @@ export default StyleSheet.create({
     borderTopWidth: 5,
   },
   map: {
-    height: Dimensions.get('window').height / 2.4,
+    height: Dimensions.get('window').height / 2.5,
     width: '100%',
+  },
+  cardView: {
+    flex: 1,
+    alignItems: 'center',
+    marginTop: 20,
   },
   buttonView: {
     marginBottom: spacing.normal,

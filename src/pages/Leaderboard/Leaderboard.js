@@ -1,72 +1,77 @@
 import React, {useEffect, useState} from 'react';
-import Toast from 'react-native-toast-message';
-import {View, Text, Button} from 'react-native';
-import useStopwatch from '../../hooks/useStopwatch';
+import {View, Text, FlatList} from 'react-native';
+import useFetchData from '../../hooks/useFetchData';
+import useUsers from '../../hooks/useUsers';
+import database from '@react-native-firebase/database';
+import Button from '../../components/Button';
 
 export default function Leaderboard() {
-  const [counter, setCounter] = useState(0);
-  // const [time, setTime] = useState({s: 0, m: 0});
-  const [interv, setInterv] = useState();
+  const [userDistanceMap, setUserDistanceMap] = useState([]);
 
-  const {time, startStopwatch, stopStopwatch} = useStopwatch();
+  const {data, dataError, dataLoading} = useFetchData('activities/');
+  const {userList, usersError, usersLoading} = useUsers();
 
-  // const start = () => {
-  //   run();
-  //   setInterv(setInterval(run, 10));
-  // };
+  useEffect(() => {
+    if (!!data && !!userList) {
+      let sortedUserDistanceMap = [];
 
-  // var updatedS = time.s,
-  //   updatedM = time.m;
+      const parsedActivityData = Object.keys(data).map(key => ({
+        id: key,
+        value: data[key],
+      }));
 
-  // const run = () => {
-  //   if (updatedS === 60) {
-  //     updatedM++;
-  //     updatedS = 0;
-  //   }
-  //   updatedS++;
-  //   return setTime({s: updatedS, m: updatedM});
-  // };
+      parsedActivityData.map(activitiyMap => {
+        let totalDistance = 0;
+        let userId = activitiyMap.id;
+        let userName = '';
 
-  function haversine() {
-    const haversine = require('haversine');
-    console.log(
-      haversine(
-        {
-          latitude: 30,
-          longitude: 83,
-        },
-        {
-          latitude: 27,
-          longitude: 82,
-        },
-        {unit: 'meter'},
-      ),
-    );
-  }
+        const activitiyMapValueArr = Object.keys(activitiyMap.value).map(
+          key => ({
+            ...activitiyMap.value[key],
+          }),
+        );
 
-  function handleCounter() {
-    let interval = null;
-    interval = setInterval(() => {
-      setCounter(prevCounter => prevCounter + 1);
-    }, 700);
-  }
+        activitiyMapValueArr.map(activity => {
+          totalDistance = totalDistance + parseInt(activity.distance);
+        });
 
-  // useEffect(() => {
-  //   let interval = null;
-  //   interval = setInterval(() => {
-  //     setCounter(prevCounter => prevCounter + 1)
-  //   }, 700);
-  // }, [])
+        userList.map(user => {
+          if (user.id === userId) {
+            const userValueArr = Object.keys(user.value).map(key => ({
+              ...user.value[key],
+            }));
+
+            userValueArr.map(userItem => {
+              userName = userItem.displayName;
+            });
+          }
+        });
+
+        sortedUserDistanceMap.push({
+          userId: userId,
+          userName: userName,
+          totalDistance: totalDistance,
+        });
+      });
+
+      sortedUserDistanceMap = sortedUserDistanceMap.sort(
+        (a, b) => b.totalDistance - a.totalDistance,
+      );
+      setUserDistanceMap(sortedUserDistanceMap);
+    }
+  }, [data]);
+
+  const renderActivities = ({item}) => <Text>{item.userName}</Text>;
 
   return (
     <View>
-      <Button title="console haversine" onPress={() => haversine()} />
-      <Button title="Start Stopwatch" onPress={() => startStopwatch()} />
-      <Button title="Stop Stopwatch" onPress={() => stopStopwatch()} />
-      <Text>
-        {time.minute >= 10 ? time.minute : '0' + time.minute}:
-        {time.second >= 10 ? time.second : '0' + time.second}
-      </Text>
+      <Text></Text>
+      <FlatList
+        data={userDistanceMap}
+        renderItem={renderActivities}
+        keyExtractor={(item, index) => index.toString()}
+      />
+      <Button label={'Get Users'} onPress={() => getUsers()} />
     </View>
   );
 }

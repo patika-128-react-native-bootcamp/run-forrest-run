@@ -15,6 +15,7 @@ const base_style = StyleSheet.create({
   label: {
     fontSize: fontSizes.huge,
     fontWeight: 'bold',
+    color: 'white',
   },
 });
 
@@ -25,10 +26,6 @@ export default {
       ...base_style.container,
       backgroundColor: colors.themeColor,
     },
-    label: {
-      ...base_style.label,
-      color: 'white',
-    },
   }),
 
   primaryNegative: StyleSheet.create({
@@ -38,10 +35,6 @@ export default {
       backgroundColor: '#c62828',
       borderWidth: 1,
       borderColor: 'white',
-    },
-    label: {
-      ...base_style.label,
-      color: 'white',
     },
   }),
 
@@ -58,36 +51,13 @@ export default {
     },
   }),
 
-  roundPrimary: StyleSheet.create({
+  transparent: StyleSheet.create({
     ...base_style,
     container: {
       ...base_style.container,
-      backgroundColor: colors.themeColor,
-      width: 150,
-      height: 150,
-      borderRadius: 75,
-    },
-    label: {
-      ...base_style.label,
-      color: 'white',
-      fontSize: fontSizes.huge,
-    },
-  }),
-
-  roundSecondary: StyleSheet.create({
-    ...base_style,
-    container: {
-      ...base_style.container,
-      borderWidth: 2,
-      borderColor: colors.themeColor,
-      width: 150,
-      height: 150,
-      borderRadius: 75,
-    },
-    label: {
-      ...base_style.label,
-      color: colors.themeColor,
-      fontSize: fontSizes.huge,
+      backgroundColor: 'rgba(0, 0, 70, 0.4)',
+      borderWidth: 1,
+      borderColor: 'white',
     },
   }),
 };

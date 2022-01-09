@@ -6,7 +6,7 @@ import spacing from '../../../styles/spacing';
 
 export default StyleSheet.create({
   itemContainer: {
-    marginVertical: 35,
+    marginVertical: 30,
     alignItems: 'center',
   },
   dateView: {
@@ -30,8 +30,8 @@ export default StyleSheet.create({
     borderColor: 'white',
     borderTopRightRadius: radius.small,
     borderTopLeftRadius: radius.small,
-    padding: spacing.normal,
-    backgroundColor: '#11928e',
+    padding: spacing.small,
+    backgroundColor: 'rgba(0, 0, 0, 0.3);',
     width: '90%',
     flexDirection: 'row',
     justifyContent: 'space-around',

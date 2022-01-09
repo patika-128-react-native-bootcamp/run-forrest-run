@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
-import colors from '../../../../styles/colors';
-import fontSizes from '../../../../styles/fontSizes';
-import spacing from '../../../../styles/spacing';
+import colors from '../../../styles/colors';
+import fontSizes from '../../../styles/fontSizes';
+import spacing from '../../../styles/spacing';
 
 const base_style = StyleSheet.create({
   container: {
@@ -37,11 +37,11 @@ export default {
     ...base_style,
     label: {
       ...base_style.label,
-      fontSize: fontSizes.big,
+      fontSize: fontSizes.normal,
     },
     value: {
       ...base_style.value,
-      fontSize: fontSizes.title,
+      fontSize: fontSizes.huge,
       color: colors.textColor,
     },
   }),

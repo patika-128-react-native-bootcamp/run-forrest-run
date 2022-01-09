@@ -5,13 +5,10 @@ import spacing from '../../../styles/spacing';
 
 export default StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-around',
     padding: spacing.small,
-    backgroundColor: '#7dd5f7',
-    marginVertical: spacing.large,
-    borderRadius: 50,
+    backgroundColor: 'rgba(0, 0, 30, 0.3);',
+    borderRadius: 20,
     width: Dimensions.get('window').width / 1.1,
   },
 });

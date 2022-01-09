@@ -1,46 +1,65 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {View, Text, ScrollView, Dimensions, Alert} from 'react-native';
 import routes from '../../navigation/routes';
 import auth from '@react-native-firebase/auth';
 import Button from '../../components/Button';
+import Toast from 'react-native-toast-message';
 import TotalInfoCard from '../../components/cards/TotalInfoCard';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import useFetchData from '../../hooks/useFetchData';
+import LinearGradient from 'react-native-linear-gradient';
+import Loading from '../../components/Loading';
+import styles from './Dashboard.style';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 
 export default function Dashboard({navigation}) {
   const [totalDistance, setTotalDistance] = useState(0);
-  const [totalTime, setTotalTime] = useState(0);
+  const [totalTime, setTotalTime] = useState({second: 0, minute: 0});
   const [activityCount, setActivityCount] = useState(0);
+  console.log('Dashboard');
 
-  const {data, dataError, dataLoading} = useFetchData(
+  const isFocused = useIsFocused();
+  console.log('isFocused');
+  console.log(isFocused);
+
+  const {data, dataLoading} = useFetchData(
     `activities/${auth().currentUser.uid}`,
   );
 
   useEffect(() => {
+    console.log('UseEffect 1');
     if (!!data) {
       let distance = 0;
-      let time = 0;
-      let count = 0;
-      setTotalDistance(
-        data.map(
-          activity => (
-            (distance = distance + parseInt(activity.distance)),
-            (time = parseInt(activity.time))
-          ),
-        ),
-      );
-      setTotalDistance(distance);
+      let timeInSecond = 0;
+      let time = {second: 0, minute: 0};
+
+      const parsedActivityData = Object.keys(data).map(key => ({
+        ...data[key],
+      }));
+
+      parsedActivityData.map(activity => {
+        distance = distance + parseInt(activity.distance);
+        timeInSecond =
+          timeInSecond + activity.time.minute * 60 + activity.time.second;
+      });
+
+      time.minute = Math.floor(timeInSecond / 60);
+      time.second = timeInSecond % 60;
+
       setTotalTime(time);
+      setTotalDistance(distance);
+      setActivityCount(parsedActivityData.length);
     }
   }, [data]);
-
-  console.log(totalDistance);
 
   function handleSignOut() {
     auth()
       .signOut()
       .then(() => {
-        console.log('Signed Out');
+        Toast.show({
+          type: 'info',
+          text1: 'Signed Out',
+        });
       })
       .catch(error => {
         console.error(error);
@@ -48,10 +67,11 @@ export default function Dashboard({navigation}) {
   }
 
   useEffect(() => {
+    console.log('UseEffect 2');
     navigation.setOptions({
       headerRight: () => (
         <Icon
-          style={{marginRight: 8}}
+          style={styles.logoutIcon}
           name="logout"
           size={35}
           onPress={() => handleSignOut()}
@@ -64,27 +84,29 @@ export default function Dashboard({navigation}) {
     navigation.navigate(routes.NEW_ACTIVITY_PAGE);
   }
 
-  return (
-    <View
-      style={{
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        backgroundColor: 'black',
-      }}>
-      <TotalInfoCard />
-      <Button label={totalDistance}></Button>
-      <Button
-        label={
-          <Text>
-            {totalTime.minute >= 10 ? totalTime.minute : '0' + totalTime.minute}
-            :
-            {totalTime.second >= 10 ? totalTime.second : '0' + totalTime.second}
-          </Text>
-        }></Button>
-      <Button
-        label={'START'}
-        type="roundPrimary"
-        onPress={navigateToNewActivity}></Button>
-    </View>
+  return dataLoading ? (
+    <Loading />
+  ) : (
+    <LinearGradient
+      // colors={['#0d0861', '#097179', '#00d4ff', '#0d0861']}
+      colors={['#4568dc', '#b06ab3']}
+      style={styles.container}>
+      <View style={styles.welcomeView}>
+        <Text style={styles.welcomeText}>
+          Welcome {auth().currentUser.displayName}
+        </Text>
+      </View>
+      <TotalInfoCard
+        totalDistance={totalDistance}
+        totalTime={totalTime}
+        activityCount={activityCount}
+      />
+      <View style={styles.buttonView}>
+        <Button
+          label={'Start An Activity'}
+          onPress={navigateToNewActivity}
+          type="transparent"></Button>
+      </View>
+    </LinearGradient>
   );
 }
