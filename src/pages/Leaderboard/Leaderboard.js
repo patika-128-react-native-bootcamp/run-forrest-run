@@ -8,8 +8,8 @@ import Button from '../../components/Button';
 export default function Leaderboard() {
   const [userDistanceMap, setUserDistanceMap] = useState([]);
 
-  const {data, dataError, dataLoading} = useFetchData('activities/');
-  const {userList, usersError, usersLoading} = useUsers();
+  const {data} = useFetchData('activities/');
+  const {userList} = useUsers();
 
   useEffect(() => {
     if (!!data && !!userList) {
@@ -59,9 +59,9 @@ export default function Leaderboard() {
       );
       setUserDistanceMap(sortedUserDistanceMap);
     }
-  }, [data]);
+  }, [data, userList]);
 
-  const renderActivities = ({item}) => <Text>{item.userName}</Text>;
+  const renderActivities = ({item, index}) => <Text>{index + 1}{item.userName}</Text>;
 
   return (
     <View>

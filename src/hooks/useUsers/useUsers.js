@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react';
 import database from '@react-native-firebase/database';
 
-//TODO fonksiyon
 export default function useFetchData() {
   const [userList, setUserList] = useState(null);
   const [usersError, setUsersError] = useState(null);
@@ -15,7 +14,7 @@ export default function useFetchData() {
         const dataObject = snapshot.val();
         if (!!dataObject) {
           const parsedList = Object.keys(dataObject).map(key => ({
-            id: key,            
+            id: key,
             value: dataObject[key],
           }));
           setUserList(parsedList);
@@ -27,20 +26,6 @@ export default function useFetchData() {
     } finally {
       setUsersLoading(false);
     }
-
-    // setUsersLoading(true);
-    // const usersReference = database().ref('users/');
-    // usersReference
-    //   .once('value')
-    //   .then(snapshot => {
-    //     const dataObject = snapshot.val();
-    //     setUserList(dataObject);
-    //     setUsersLoading(false);
-    //   })
-    //   .catch(error => {
-    //     setUsersLoading(false);
-    //     setUsersError(error);
-    //   });
   }
 
   useEffect(() => {

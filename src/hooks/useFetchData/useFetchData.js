@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import database from '@react-native-firebase/database';
-//TODO fonksiyon
+
 export default function useFetchData(reference) {
   const [data, setData] = useState(null);
   const [dataError, setDataError] = useState(null);
@@ -16,10 +16,7 @@ export default function useFetchData(reference) {
       const dataReference = database().ref(reference);
       dataReference.on('value', snapshot => {
         const dataObject = snapshot.val();
-        if (!!dataObject) {    
-          // const parsedData = Object.keys(dataObject).map(key => ({
-          //   ...dataObject[key]
-          // }));
+        if (!!dataObject) {
           setData(dataObject);
         }
         setDataLoading(false);
@@ -29,22 +26,6 @@ export default function useFetchData(reference) {
     } finally {
       setDataLoading(false);
     }
-    // // setDataLoading(true);
-    // const dataReference = database().ref(reference);
-    //  dataReference
-    //   .once('value')
-    //   .then(snapshot => {
-    //     const dataObject = snapshot.val();
-    //     const parsedData = Object.keys(dataObject).map(key => ({
-    //       ...dataObject[key],
-    //     }));
-    //     setData(parsedData);
-    //     setDataLoading(false);
-    //   })
-    //   .catch(error => {
-    //     setDataLoading(false);
-    //     setDataError(error);
-    // //   });
   }
 
   return {

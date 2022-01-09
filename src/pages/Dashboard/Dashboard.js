@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {View, Text, ScrollView, Dimensions, Alert} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text} from 'react-native';
 import routes from '../../navigation/routes';
 import auth from '@react-native-firebase/auth';
 import Button from '../../components/Button';
@@ -10,24 +10,17 @@ import useFetchData from '../../hooks/useFetchData';
 import LinearGradient from 'react-native-linear-gradient';
 import Loading from '../../components/Loading';
 import styles from './Dashboard.style';
-import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 
 export default function Dashboard({navigation}) {
   const [totalDistance, setTotalDistance] = useState(0);
   const [totalTime, setTotalTime] = useState({second: 0, minute: 0});
   const [activityCount, setActivityCount] = useState(0);
-  console.log('Dashboard');
-
-  const isFocused = useIsFocused();
-  console.log('isFocused');
-  console.log(isFocused);
 
   const {data, dataLoading} = useFetchData(
     `activities/${auth().currentUser.uid}`,
   );
 
   useEffect(() => {
-    console.log('UseEffect 1');
     if (!!data) {
       let distance = 0;
       let timeInSecond = 0;
@@ -62,12 +55,15 @@ export default function Dashboard({navigation}) {
         });
       })
       .catch(error => {
-        console.error(error);
+        Toast.show({
+          type: 'error',
+          text1: 'Signed Out Failed',
+        });
+        console.log(error);
       });
   }
 
   useEffect(() => {
-    console.log('UseEffect 2');
     navigation.setOptions({
       headerRight: () => (
         <Icon
@@ -87,10 +83,7 @@ export default function Dashboard({navigation}) {
   return dataLoading ? (
     <Loading />
   ) : (
-    <LinearGradient
-      // colors={['#0d0861', '#097179', '#00d4ff', '#0d0861']}
-      colors={['#4568dc', '#b06ab3']}
-      style={styles.container}>
+    <LinearGradient colors={['#4568dc', '#b06ab3']} style={styles.container}>
       <View style={styles.welcomeView}>
         <Text style={styles.welcomeText}>
           Welcome {auth().currentUser.displayName}
