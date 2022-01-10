@@ -39,40 +39,52 @@ export default function SignUp({navigation}) {
       });
       return;
     }
-    auth()
-      .createUserWithEmailAndPassword(signData.email, signData.password)
-      .then(response => {
-        auth()
-          .currentUser.updateProfile({
-            displayName: displayName,
-          })
-          .then(() => {
-            saveUserToDatabase(response.user._user, displayName);
-          });
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          Toast.show({
-            type: 'error',
-            text1: 'That email address is already in use!',
-          });
-        }
-
-        if (error.code === 'auth/invalid-email') {
-          Toast.show({
-            type: 'error',
-            text1: 'That email address is invalid!',
-          });
-        }
-
-        if (error.code === 'auth/weak-password') {
-          Toast.show({
-            type: 'error',
-            text1: 'Password should be at least 6 characters',
-          });
-        }
-        console.error(error);
+    if (
+      !signData.email.trim() ||
+      !signData.password.trim() ||
+      !signData.name.trim() ||
+      !signData.surname.trim()
+    ) {
+      Toast.show({
+        type: 'error',
+        text1: 'Please provide all required information above',
       });
+    } else {
+      auth()
+        .createUserWithEmailAndPassword(signData.email, signData.password)
+        .then(response => {
+          auth()
+            .currentUser.updateProfile({
+              displayName: displayName,
+            })
+            .then(() => {
+              saveUserToDatabase(response.user._user, displayName);
+            });
+        })
+        .catch(error => {
+          if (error.code === 'auth/email-already-in-use') {
+            Toast.show({
+              type: 'error',
+              text1: 'That email address is already in use!',
+            });
+          }
+
+          if (error.code === 'auth/invalid-email') {
+            Toast.show({
+              type: 'error',
+              text1: 'That email address is invalid!',
+            });
+          }
+
+          if (error.code === 'auth/weak-password') {
+            Toast.show({
+              type: 'error',
+              text1: 'Password should be at least 6 characters',
+            });
+          }
+          console.error(error);
+        });
+    }
   }
 
   return (
@@ -121,7 +133,11 @@ export default function SignUp({navigation}) {
               value={values.rePassword}
               onChangeText={handleChange('rePassword')}
             />
-            <Button label="Sign Up" onPress={handleSubmit} type="transparent" />
+            <Button
+              label="Sign Up"
+              onPress={handleSubmit}
+              type="transparentBorderless"
+            />
           </View>
         )}
       </Formik>
@@ -131,7 +147,7 @@ export default function SignUp({navigation}) {
             <Icon name="arrow-left" size={27} /> Back
           </Text>
         }
-        type="secondary"
+        type="secondaryTheme"
         onPress={handleReturnLogin}
       />
     </LinearGradient>

@@ -9,6 +9,7 @@ import Button from '../Button';
 import ValueItem from '../cards/ValueItem';
 import ResultMap from '../ResultMap';
 import styles from './ResultsModal.style';
+import TimeText from '../TimeText';
 
 export default function ResultsModal(props) {
   function handleCloseModal() {
@@ -33,7 +34,7 @@ export default function ResultsModal(props) {
       onBackdropPress={() => handleCloseModal()}
       style={styles.modalView}>
       <LinearGradient
-        colors={['#2f578b', '#00173c', '#2e1537', '#360f31']}
+        colors={['white', '#4568dc', '#b06ab3']}
         style={styles.linearGradient}>
         <ViewShot ref={viewShotRef} options={{format: 'jpg', quality: 1.0}}>
           <ResultMap
@@ -48,17 +49,7 @@ export default function ResultsModal(props) {
             />
             <ValueItem
               itemLabel={<Icon name="timer-outline" size={35} />}
-              itemValue={
-                <Text>
-                  {props.time.minute >= 10
-                    ? props.time.minute
-                    : '0' + props.time.minute}
-                  :
-                  {props.time.second >= 10
-                    ? props.time.second
-                    : '0' + props.time.second}
-                </Text>
-              }
+              itemValue={<TimeText time={props.time} />}
               type="bigSize"
             />
           </View>
@@ -78,7 +69,11 @@ export default function ResultsModal(props) {
             onPress={() => props.handleFinishActivity()}
           />
           <Button
-            label={'Share'}
+            label={
+              <Text>
+                Share <Icon name="share" size={25} color={'white'} />
+              </Text>
+            }
             type="secondary"
             onPress={() => shareResults()}
           />

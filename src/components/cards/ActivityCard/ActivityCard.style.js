@@ -1,16 +1,16 @@
 import {Dimensions, StyleSheet} from 'react-native';
 import colors from '../../../styles/colors';
-import fontSizes from '../../../styles/fontSizes';
+import radius from '../../../styles/radius';
 import spacing from '../../../styles/spacing';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'space-around',
-    marginBottom: 20,
+    marginBottom: spacing.big,
     padding: spacing.small,
-    backgroundColor: 'rgba(0, 0, 30, 0.3);',
-    borderRadius: 20,
+    backgroundColor: colors.themeColor,
+    borderRadius: radius.big,
     width: Dimensions.get('window').width / 1.1,
   },
   rowContainer: {

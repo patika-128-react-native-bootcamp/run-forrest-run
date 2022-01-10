@@ -3,6 +3,7 @@ import Geolocation from '@react-native-community/geolocation';
 import Toast from 'react-native-toast-message';
 import NewActivityLayout from './layout/NewActivityLayout';
 import routes from '../../navigation/routes';
+import {PermissionsAndroid} from 'react-native';
 import haversine from 'haversine';
 import {fetchWeather} from '../../services/weatherService';
 import useStopwatch from '../../hooks/useStopwatch';
@@ -22,23 +23,58 @@ export default function NewActivity({navigation}) {
   const {time, startStopwatch, stopStopwatch} = useStopwatch();
 
   useEffect(() => {
-    Geolocation.getCurrentPosition(
-      position => {
-        setStartingCoord(position.coords);
-        setCurrentCoord(position.coords);
-        handleFetchWeather(position.coords.latitude, position.coords.longitude);
-      },
-      error => {
+    requestLocationPermission();
+  }, []);
+
+  async function requestLocationPermission() {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'RunForrestRun',
+          message: 'RunForrestRun access to your location ',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        Geolocation.getCurrentPosition(
+          position => {
+            setStartingCoord(position.coords);
+            setCurrentCoord(position.coords);
+            handleFetchWeather(
+              position.coords.latitude,
+              position.coords.longitude,
+            );
+          },
+          error => {
+            Toast.show({
+              type: 'error',
+              text1: 'Error Getting Location!',
+              text2: 'Ensure your gps on',
+            });
+            console.log(error);
+            navigateToDashboard();
+          },
+          {
+            enableHighAccuracy: false,
+            timeout: 10000,
+          },
+        );
+      } else {
         Toast.show({
           type: 'error',
-          text1: 'Error Getting Location!',
-          text2: 'Ensure your gps on',
+          text1: 'You have to give location permission',
         });
-        console.log(error);
         navigateToDashboard();
-      },
-    );
-  }, []);
+      }
+    } catch (err) {
+      Toast.show({
+        type: 'error',
+        text1: 'An unexpected error occured.',
+      });
+      navigateToDashboard();
+    }
+  }
 
   useEffect(() => {
     if (!!currentCoord && isStarted) {
@@ -60,6 +96,7 @@ export default function NewActivity({navigation}) {
       Toast.show({
         type: 'error',
         text1: 'Weather information could not fetched',
+        text2: {latitude},
       });
       console.log(error);
       navigateToDashboard();
@@ -101,8 +138,8 @@ export default function NewActivity({navigation}) {
         navigateToDashboard();
       },
       {
-        maximumAge: 0,
-        distanceFilter: 15,
+        enableHighAccuracy: false,
+        distanceFilter: 10,
         timeout: 10000,
       },
     );
@@ -122,6 +159,12 @@ export default function NewActivity({navigation}) {
     setResultsModalVisible(true);
   }
 
+  function handleFinishActivity() {
+    saveActivityToDatabase();
+    setResultsModalVisible(false);
+    navigateToDashboard();
+  }
+
   function saveActivityToDatabase() {
     const activitiesReference = database().ref(
       `activities/${auth().currentUser.uid}`,
@@ -135,21 +178,10 @@ export default function NewActivity({navigation}) {
     });
   }
 
-  function handleFinishActivity() {
-    saveActivityToDatabase();
-    setResultsModalVisible(false);
-    navigateToDashboard();
-  }
-
   function navigateToDashboard() {
     navigation.navigate(routes.DASHBOARD_PAGE);
   }
 
-  // if (!!weatherInfo.weather) {
-  //   console.log(weatherInfo.weather[0].main);
-  // }
-
-  //weatherInfo.length > 0
   return (
     <NewActivityLayout
       isStarted={isStarted}

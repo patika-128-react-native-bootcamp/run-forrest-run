@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 import spacing from '../../styles/spacing';
 import radius from '../../styles/radius';
+import fontSizes from '../../styles/fontSizes';
 
 export default StyleSheet.create({
   container: {
@@ -14,7 +15,7 @@ export default StyleSheet.create({
   },
   label: {
     fontWeight: 'bold',
-    fontSize:17
+    fontSize: fontSizes.normal,
   },
   input: {
     padding: spacing.tiny,

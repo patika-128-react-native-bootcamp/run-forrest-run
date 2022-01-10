@@ -1,26 +1,27 @@
 import {Dimensions, StyleSheet} from 'react-native';
 import colors from '../../styles/colors';
+import fontSizes from '../../styles/fontSizes';
+import radius from '../../styles/radius';
 import spacing from '../../styles/spacing';
 
 export default StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'space-around',
-    backgroundColor: 'black',
     flex: 1,
   },
   welcomeView: {
-    padding: 8,
-    backgroundColor: 'rgba(0, 0, 30, 0.3);',
-    marginTop: 5,
-    borderRadius: 20,
+    padding: spacing.normal,
+    backgroundColor: colors.themeColor,
+    marginTop: spacing.small,
+    borderRadius: radius.big,
     alignItems: 'center',
     width: Dimensions.get('window').width / 1.1,
   },
   welcomeText: {
-    fontSize: 28,
+    fontSize: fontSizes.title,
     fontWeight: 'bold',
-    color: 'white',
+    color: colors.textColor,
   },
   buttonView: {
     width: '95%',

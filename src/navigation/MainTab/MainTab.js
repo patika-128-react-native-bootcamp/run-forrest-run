@@ -10,13 +10,24 @@ export default function MainTab() {
   const Tab = createBottomTabNavigator();
 
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: '#4563bf',
+        tabBarInactiveTintColor: 'white',
+        tabBarStyle: {
+          backgroundColor: '#633f89',
+        },
+      }}>
       <Tab.Screen
         name={routes.DASHBOARD_PAGE}
         component={Dashboard}
         options={{
           tabBarIcon: ({...rest}) => <Icon name="view-dashboard" {...rest} />,
           headerTitleAlign: 'center',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#293c91',
+          },
         }}
       />
       <Tab.Screen
@@ -25,6 +36,10 @@ export default function MainTab() {
         options={{
           tabBarIcon: ({...rest}) => <Icon name="wrap" {...rest} />,
           headerTitleAlign: 'center',
+          headerTintColor: 'white',
+          headerStyle: {
+            backgroundColor: '#293c91',
+          },
         }}
       />
       <Tab.Screen
@@ -33,6 +48,7 @@ export default function MainTab() {
         options={{
           tabBarIcon: ({...rest}) => <Icon name="trophy-outline" {...rest} />,
           headerTitleAlign: 'center',
+          headerShown: false,
         }}
       />
     </Tab.Navigator>

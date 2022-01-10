@@ -3,6 +3,8 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './PastActivityCard.style';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ValueItem from '../ValueItem';
+import TimeText from '../../TimeText';
+import colors from '../../../styles/colors';
 
 export default function PastActivityCard({
   activityDate,
@@ -26,17 +28,7 @@ export default function PastActivityCard({
         <View style={styles.valueSeperator} />
         <ValueItem
           itemLabel={<Icon name="timer-outline" size={30} />}
-          itemValue={
-            <Text>
-              {activityTime.minute >= 10
-                ? activityTime.minute
-                : '0' + activityTime.minute}
-              :
-              {activityTime.second >= 10
-                ? activityTime.second
-                : '0' + activityTime.second}
-            </Text>
-          }
+          itemValue={<TimeText time={activityTime} />}
           type="secondary"
         />
       </View>
@@ -45,7 +37,7 @@ export default function PastActivityCard({
         onPress={() => onButtonPress()}>
         <View style={styles.buttonView}>
           <Text style={styles.buttonText}>Details </Text>
-          <Icon name="arrow-right" size={25} color={'#11928e'} />
+          <Icon name="arrow-right" size={25} color={colors.themeStaticIndigo} />
         </View>
       </TouchableOpacity>
     </View>

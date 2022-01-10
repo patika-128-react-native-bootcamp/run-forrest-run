@@ -1,5 +1,4 @@
-import {Dimensions, StyleSheet} from 'react-native';
-import colors from '../../styles/colors';
+import {StyleSheet} from 'react-native';
 import spacing from '../../styles/spacing';
 import radius from '../../styles/radius';
 

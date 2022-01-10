@@ -16,7 +16,7 @@ const base_style = StyleSheet.create({
   },
   value: {
     fontWeight: 'bold',
-    color: colors.themeColor,
+    color: colors.textColor,
   },
 });
 

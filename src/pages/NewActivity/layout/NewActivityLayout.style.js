@@ -5,7 +5,6 @@ import spacing from '../../../styles/spacing';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
   },
   mapFrame: {
     borderBottomColor: colors.themeColor,
@@ -20,7 +19,7 @@ export default StyleSheet.create({
   cardView: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: spacing.big,
   },
   buttonView: {
     marginBottom: spacing.normal,

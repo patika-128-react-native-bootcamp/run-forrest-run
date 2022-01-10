@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 import colors from '../../../../styles/colors';
 import fontSizes from '../../../../styles/fontSizes';
+import radius from '../../../../styles/radius';
 import spacing from '../../../../styles/spacing';
 
 export default StyleSheet.create({
@@ -11,11 +12,11 @@ export default StyleSheet.create({
   },
   valueFrame: {
     padding: spacing.large,
-    borderRadius: 100,
+    borderRadius: radius.normal,
     minWidth: 100,
     borderWidth: 1,
     borderColor: 'white',
-    backgroundColor: 'rgba(30, 0, 50, 0.3);',
+    backgroundColor: colors.themeColor,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: spacing.micro,

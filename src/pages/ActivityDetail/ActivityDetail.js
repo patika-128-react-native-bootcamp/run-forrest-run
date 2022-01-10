@@ -13,9 +13,7 @@ export default function ActivityDetail() {
 
   return (
     <LinearGradient
-      colors={['#2f578b', '#00173c', '#2e1537', '#360f31']}
-      start={{x: 0, y: 0}}
-      end={{x: 1, y: 0}}
+      colors={['white','#4568dc', '#b06ab3']}
       style={styles.container}>
       <ResultMap
         routeCoords={activityInfo.routeCoords}

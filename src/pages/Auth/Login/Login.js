@@ -16,28 +16,34 @@ export default function Login({navigation}) {
   }
 
   function handleLogin(loginData) {
-    auth()
-      .signInWithEmailAndPassword(loginData.email, loginData.password)
-      .then(() => {
-        Toast.show({
-          type: 'success',
-          text1: 'Login Successful',
-          text2: 'Lets start an activity!',
-        });
-      })
-      .catch(error => {
-        Toast.show({
-          type: 'error',
-          text1: 'Login Successful!',
-        });
-        console.log(error);
+    if (!loginData.email.trim() || !loginData.password.trim()) {
+      Toast.show({
+        type: 'error',
+        text1: 'email or password can not be empty',
       });
+    } else {
+      auth()
+        .signInWithEmailAndPassword(loginData.email, loginData.password)
+        .then(() => {
+          Toast.show({
+            type: 'success',
+            text1: 'Login Successful',
+            text2: 'Lets start an activity!',
+          });
+        })
+        .catch(error => {
+          Toast.show({
+            type: 'error',
+            text1: 'Login Failed!',
+          });
+          console.log(error);
+        });
+    }
   }
 
   return (
     <LinearGradient colors={['#d1fffd', '#f4b6e2']} style={styles.container}>
-      {/* <Image source={'../../../assets/lala.jpg'} style={{width:'100%',height:400, resizeMode:'contain'}}/>   */}
-      <View style={{width: '100%', height: 230}}>
+      <View style={styles.animationView}>
         <LottieView
           source={require('../../../assets/walking.json')}
           autoPlay
@@ -63,10 +69,14 @@ export default function Login({navigation}) {
               value={values.password}
               onChangeText={handleChange('password')}
             />
-            <Button label="Log In" onPress={handleSubmit} type="transparent" />
+            <Button
+              label="Log In"
+              onPress={handleSubmit}
+              type="transparentBorderless"
+            />
             <Button
               label="Sign Up"
-              type="secondary"
+              type="secondaryTheme"
               onPress={handleNavigateSignUp}
             />
           </View>

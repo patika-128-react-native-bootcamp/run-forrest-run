@@ -3,10 +3,10 @@ import {StyleSheet} from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent:'space-around',
+    justifyContent: 'space-around',
   },
-  logo: {
-    fontSize: 100,
-    textAlign: 'center',
+  animationView: {
+    width: '100%',
+    height: 230,
   },
 });

@@ -7,13 +7,13 @@ import styles from './NewActivityLayout.style';
 import ResultsModal from '../../../components/ResultsModal';
 import ActivityCard from '../../../components/cards/ActivityCard';
 import Button from '../../../components/Button';
-import {mapTheme} from '../../../styles/mapTheme'
+import {mapTheme} from '../../../styles/mapTheme';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function NewActivityLayout(props) {
   return !!props.currentCoord && !!props.weatherInfo ? (
     <LinearGradient
-      colors={['#fdd3ce', '#fdd3ce', '#e786d6', '#4db7ef']}
+      colors={['white', '#4568dc', '#b06ab3']}
       style={styles.container}>
       <View style={styles.mapFrame}>
         <MapView

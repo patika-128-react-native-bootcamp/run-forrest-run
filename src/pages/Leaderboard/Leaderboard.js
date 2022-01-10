@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import useFetchData from '../../hooks/useFetchData';
 import useUsers from '../../hooks/useUsers';
-import database from '@react-native-firebase/database';
-import Button from '../../components/Button';
+import colors from '../../styles/colors';
+import styles from './Leaderboard.style';
 
 export default function Leaderboard() {
   const [userDistanceMap, setUserDistanceMap] = useState([]);
@@ -61,17 +63,37 @@ export default function Leaderboard() {
     }
   }, [data, userList]);
 
-  const renderActivities = ({item, index}) => <Text>{index + 1}{item.userName}</Text>;
+  const renderActivities = ({item, index}) => (
+    <View style={styles.userView}>
+      {index + 1 === 1 ? (
+        <Icon name="crown" size={45} color={'yellow'} />
+      ) : null}
+      {index + 1 === 2 ? (
+        <Icon name="crown" size={40} color={'#C0C0C0'} />
+      ) : null}
+      {index + 1 === 3 ? (
+        <Icon name="crown" size={40} color={'#CD7F32'} />
+      ) : null}
+      {index + 1 > 3 ? (
+        <Text style={styles.userInfo}> #{index + 1}</Text>
+      ) : null}
+      <Text style={styles.userInfo}>{item.userName}</Text>
+      <Text style={styles.userInfo}>{item.totalDistance}</Text>
+    </View>
+  );
 
   return (
-    <View>
-      <Text></Text>
+    <LinearGradient colors={['#4568dc', '#b06ab3']} style={styles.container}>
+      <View style={styles.topBarContainer}>
+        <Text style={styles.topBarInfo}>Rank</Text>
+        <Text style={styles.topBarInfo}>Name</Text>
+        <Text style={styles.topBarInfo}>Distance</Text>
+      </View>
       <FlatList
         data={userDistanceMap}
         renderItem={renderActivities}
         keyExtractor={(item, index) => index.toString()}
       />
-      <Button label={'Get Users'} onPress={() => getUsers()} />
-    </View>
+    </LinearGradient>
   );
 }

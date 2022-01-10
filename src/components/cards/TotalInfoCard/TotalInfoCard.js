@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import TotalInfoCardItem from './TotalInfoCardItem';
 import styles from './TotalInfoCard.style';
+import TimeText from '../../TimeText';
 
 export default function TotalInfoCard({
   totalDistance,
@@ -10,29 +11,17 @@ export default function TotalInfoCard({
 }) {
   return (
     <View style={styles.container}>
-      <View style={{alignItems: 'center'}}>
-        <Text style={{fontSize: 30, fontWeight: 'bold', color: 'white'}}>
-          Your Stats
-        </Text>
+      <View style={styles.labelContainer}>
+        <Text style={styles.label}>Your Stats</Text>
       </View>
-      <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+      <View style={styles.itemsContainer}>
         <TotalInfoCardItem
           itemLabel={'Total Distance'}
           itemValue={totalDistance}
         />
         <TotalInfoCardItem
           itemLabel={'Total Time'}
-          itemValue={
-            <Text>
-              {totalTime.minute >= 10
-                ? totalTime.minute
-                : '0' + totalTime.minute}
-              :
-              {totalTime.second >= 10
-                ? totalTime.second
-                : '0' + totalTime.second}
-            </Text>
-          }
+          itemValue={<TimeText time={totalTime} />}
         />
       </View>
       <TotalInfoCardItem

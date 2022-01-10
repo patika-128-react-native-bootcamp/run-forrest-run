@@ -1,9 +1,9 @@
 import {Dimensions, StyleSheet} from 'react-native';
+import spacing from '../../styles/spacing';
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
   },
   map: {
     height: Dimensions.get('window').height / 2.4,
@@ -12,6 +12,6 @@ export default StyleSheet.create({
   cardView: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: spacing.big,
   },
 });

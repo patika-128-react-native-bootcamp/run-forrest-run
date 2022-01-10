@@ -98,7 +98,7 @@ export default function Dashboard({navigation}) {
         <Button
           label={'Start An Activity'}
           onPress={navigateToNewActivity}
-          type="transparent"></Button>
+          type="transparent"/>
       </View>
     </LinearGradient>
   );

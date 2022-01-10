@@ -40,7 +40,7 @@ export default function PastActivities({navigation}) {
   );
 
   return (
-    <LinearGradient colors={['#ce91dc', '#b2ffdd']} style={styles.container}>
+    <LinearGradient colors={['#4568dc', '#b06ab3']} style={styles.container}>
       {dataLoading && <Loading />}
       <FlatList
         data={activityList}

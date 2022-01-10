@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import TimeText from '../../TimeText';
 import ValueItem from '../ValueItem';
 import styles from './ActivityCard.style';
 
@@ -15,17 +16,7 @@ export default function ActivityCard(props) {
         />
         <ValueItem
           itemLabel={<Icon name="timer-outline" size={35} />}
-          itemValue={
-            <Text>
-              {props.time.minute >= 10
-                ? props.time.minute
-                : '0' + props.time.minute}
-              :
-              {props.time.second >= 10
-                ? props.time.second
-                : '0' + props.time.second}
-            </Text>
-          }
+          itemValue={<TimeText time={props.time} />}
           type="bigSize"
         />
       </View>
