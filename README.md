@@ -19,26 +19,26 @@ A running and walking application where you can calculate your distance and time
   <br/>
   <br/>
   <br/>
-  <img src="src/assets/gifs/gif1.gif" width="410" height="740" >
+  <img src="src/assets/gifs/gif1.gif" width="400" height="720" >
   <br/>
   <br/>
   <br/>
   <br/>
   <br/>
   <br/>
-  <img src="src/assets/gifs/gif2.gif" width="410" height="740" >
+  <img src="src/assets/gifs/gif2.gif" width="400" height="720" >
   <br/>
   <br/>
   <br/>
   <br/>
   <br/>
   <br/>
-  <img src="src/assets/gifs/gif3.gif" width="410" height="740" >
+  <img src="src/assets/gifs/gif3.gif" width="400" height="720" >
   <br/>
   <br/>
   <br/>
   <br/>
   <br/>
   <br/>
-  <img src="src/assets/gifs/gif4.gif" width="410" height="740" >
+  <img src="src/assets/gifs/gif4.gif" width="400" height="720" >
 </p>
