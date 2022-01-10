@@ -1,1 +1,38 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-f059dc9a6f8d3a56e377f745f24479a46679e63a5d9fe6f495e02850cd0d8118.svg)](https://classroom.github.com/online_ide?assignment_repo_id=6609873&assignment_repo_type=AssignmentRepo)
+# RunForrestRun App
+
+## Info
+
+A running and walking application where you can calculate your distance and time, see the weather ınfo on your location and track your location on the map. You can save your activities and you can see them after. 
+
+|                             |                             |                             |                             |                       
+| :-------------------------: | :-------------------------: | :-------------------------: | :-------------------------: | 
+| ![img-1](src/assets/project-images/1.png '1') | ![img-2](src/assets/project-images/2.png '2') | ![img-3](src/assets/project-images/3.png '3') | ![img-4](src/assets/project-images/4.png '4') 
+
+|                             |                             |                             |                             |                            
+| :-------------------------: | :-------------------------: | :-------------------------: | :-------------------------: | 
+| ![img-5](src/assets/project-images/5.png '1')| ![img-6](src/assets/project-images/6.png '2') | ![img-7](src/assets/project-images/7.png '3') | ![img-8](src/assets/project-images/8.png '4') | 
+
+<p align="center">
+  <img src="src/assets/gifs/gif1.gif" width="360" height="740" >
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <img src="src/assets/gifs/gif2.gif" width="360" height="740" >
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <img src="src/assets/gifs/gif3.gif" width="360" height="740" >
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <img src="src/assets/gifs/gif4.gif" width="360" height="740" >
+</p>
