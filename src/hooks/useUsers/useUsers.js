@@ -4,11 +4,9 @@ import database from '@react-native-firebase/database';
 export default function useFetchData() {
   const [userList, setUserList] = useState(null);
   const [usersError, setUsersError] = useState(null);
-  const [usersLoading, setUsersLoading] = useState(true);
 
   function fetchUsers() {
     try {
-      setUsersLoading(true);
       const usersReference = database().ref('userInfo');
       usersReference.on('value', snapshot => {
         const dataObject = snapshot.val();
@@ -19,12 +17,9 @@ export default function useFetchData() {
           }));
           setUserList(parsedList);
         }
-        setUsersLoading(false);
       });
     } catch (error) {
       setUsersError(error);
-    } finally {
-      setUsersLoading(false);
     }
   }
 
@@ -35,7 +30,6 @@ export default function useFetchData() {
   return {
     userList,
     usersError,
-    usersLoading,
     fetchUsers,
   };
 }

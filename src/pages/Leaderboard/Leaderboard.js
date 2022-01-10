@@ -4,7 +4,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import useFetchData from '../../hooks/useFetchData';
 import useUsers from '../../hooks/useUsers';
-import colors from '../../styles/colors';
 import styles from './Leaderboard.style';
 
 export default function Leaderboard() {
@@ -66,7 +65,7 @@ export default function Leaderboard() {
   const renderActivities = ({item, index}) => (
     <View style={styles.userView}>
       {index + 1 === 1 ? (
-        <Icon name="crown" size={45} color={'yellow'} />
+        <Icon name="crown" size={45} color={'#FFDF00'} />
       ) : null}
       {index + 1 === 2 ? (
         <Icon name="crown" size={40} color={'#C0C0C0'} />

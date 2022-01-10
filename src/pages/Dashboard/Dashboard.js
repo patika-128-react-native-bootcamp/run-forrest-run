@@ -8,7 +8,6 @@ import TotalInfoCard from '../../components/cards/TotalInfoCard';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import useFetchData from '../../hooks/useFetchData';
 import LinearGradient from 'react-native-linear-gradient';
-import Loading from '../../components/Loading';
 import styles from './Dashboard.style';
 
 export default function Dashboard({navigation}) {
@@ -16,9 +15,7 @@ export default function Dashboard({navigation}) {
   const [totalTime, setTotalTime] = useState({second: 0, minute: 0});
   const [activityCount, setActivityCount] = useState(0);
 
-  const {data, dataLoading} = useFetchData(
-    `activities/${auth().currentUser.uid}`,
-  );
+  const {data} = useFetchData(`activities/${auth().currentUser.uid}`);
 
   useEffect(() => {
     if (!!data) {
@@ -80,9 +77,7 @@ export default function Dashboard({navigation}) {
     navigation.navigate(routes.NEW_ACTIVITY_PAGE);
   }
 
-  return dataLoading ? (
-    <Loading />
-  ) : (
+  return (
     <LinearGradient colors={['#4568dc', '#b06ab3']} style={styles.container}>
       <View style={styles.welcomeView}>
         <Text style={styles.welcomeText}>
@@ -98,7 +93,8 @@ export default function Dashboard({navigation}) {
         <Button
           label={'Start An Activity'}
           onPress={navigateToNewActivity}
-          type="transparent"/>
+          type="transparent"
+        />
       </View>
     </LinearGradient>
   );

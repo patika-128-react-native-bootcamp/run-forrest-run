@@ -36,10 +36,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
-  metersText: {
-    color: colors.textColor,
-    fontSize: fontSizes.big,
-  },
   valueSeperator: {
     borderColor: 'white',
     borderWidth: 2,

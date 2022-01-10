@@ -56,7 +56,7 @@ export default function NewActivity({navigation}) {
             navigateToDashboard();
           },
           {
-            enableHighAccuracy: false,
+            enableHighAccuracy: true,
             timeout: 10000,
           },
         );
@@ -138,7 +138,7 @@ export default function NewActivity({navigation}) {
         navigateToDashboard();
       },
       {
-        enableHighAccuracy: false,
+        enableHighAccuracy: true,
         distanceFilter: 10,
         timeout: 10000,
       },

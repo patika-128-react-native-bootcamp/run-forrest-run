@@ -1,27 +1,24 @@
 import React, {useEffect, useState} from 'react';
-import {View, Alert, FlatList} from 'react-native';
-import Loading from '../../components/Loading';
+import {View, FlatList} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import useFetchData from '../../hooks/useFetchData';
 import routes from '../../navigation/routes';
 import auth from '@react-native-firebase/auth';
 import styles from './PastActivities.style';
-import PastActivityCard from '../../components/cards/PastActivityCard/PastActivityCard';
+import PastActivityCard from '../../components/cards/PastActivityCard';
 
 export default function PastActivities({navigation}) {
   const [activityList, setActivityList] = useState([]);
 
-  const {data, dataLoading} = useFetchData(
-    `activities/${auth().currentUser.uid}`,
-  );
+  const {data} = useFetchData(`activities/${auth().currentUser.uid}`);
 
   useEffect(() => {
-    if(!!data){
+    if (!!data) {
       const parsedActivityData = Object.keys(data).map(key => ({
-        ...data[key]
+        ...data[key],
       }));
       setActivityList(parsedActivityData);
-    }   
+    }
   }, [data]);
 
   function navigateToActivityDetail(activityInfo) {
@@ -41,7 +38,6 @@ export default function PastActivities({navigation}) {
 
   return (
     <LinearGradient colors={['#4568dc', '#b06ab3']} style={styles.container}>
-      {dataLoading && <Loading />}
       <FlatList
         data={activityList}
         renderItem={renderActivities}

@@ -1,5 +1,4 @@
 import React from 'react';
-import {Text} from 'react-native';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from './ResultMap.style';
@@ -15,8 +14,8 @@ export default function ResultMap({
       region={{
         latitude: regionCoords.latitude,
         longitude: regionCoords.longitude,
-        latitudeDelta: 0.02,
-        longitudeDelta: 0.02,
+        latitudeDelta: 0.008,
+        longitudeDelta: 0.008,
       }}
       customMapStyle={mapTheme}
       style={styles[type].map}>

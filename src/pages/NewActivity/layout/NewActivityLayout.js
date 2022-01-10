@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 import Loading from '../../../components/Loading';
 import LinearGradient from 'react-native-linear-gradient';
@@ -18,7 +18,6 @@ export default function NewActivityLayout(props) {
       <View style={styles.mapFrame}>
         <MapView
           style={styles.map}
-          showsUserLocation={true}
           followsUserLocation={true}
           customMapStyle={mapTheme}
           region={{
@@ -34,10 +33,17 @@ export default function NewActivityLayout(props) {
           />
           <Marker
             coordinate={{
+              latitude: props.currentCoord.latitude,
+              longitude: props.currentCoord.longitude,
+            }}>
+            <Icon name="google-street-view" size={35} color={'green'} />
+          </Marker>
+          <Marker
+            coordinate={{
               latitude: props.startingCoord.latitude,
               longitude: props.startingCoord.longitude,
             }}>
-            <Icon name="map-marker" size={40} color={'blue'} />
+            <Icon name="map-marker" size={35} color={'blue'} />
           </Marker>
         </MapView>
       </View>
